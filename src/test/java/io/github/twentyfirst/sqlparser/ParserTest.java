@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class ParserTest extends TestBase {
 
-	static final Logger log = LoggerFactory.getLogger(TestBase.class);
+	static final Logger log = LoggerFactory.getLogger(ParserTest.class);
 
 	public ParserTest() {
 		super(log);

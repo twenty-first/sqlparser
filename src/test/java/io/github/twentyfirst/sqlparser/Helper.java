@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.Recognizer;
 import org.slf4j.Logger;
 
 import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
+import io.github.twentyfirst.sqlparser.ast.Statement;
 
 public class Helper extends BaseErrorListener {
 
@@ -16,13 +17,23 @@ public class Helper extends BaseErrorListener {
 		this.log = log;
 	}
 	
-	public StatementContext	parse(String src) {
+	private Driver driver(String src) {
 		failed = false;
-		Driver d = new Driver(src, this);
+		return new Driver(src, this);
+	}
+	
+	public StatementContext	parse(String src) {
+		Driver d = driver(src);
 		StatementContext sc = d.parse();
 		return failed ? null : sc;
 	}
 
+	public Statement ast(String src) {
+		Driver d = driver(src);
+		Statement s = d.makeAst();
+		return failed ? null : s;
+	}
+	
 	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line,
 			int charPositionInLine, String msg, RecognitionException e) {

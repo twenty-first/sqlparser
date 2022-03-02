@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
+import io.github.twentyfirst.sqlparser.ast.Statement;
 
 public class Driver {
 	
@@ -46,6 +47,14 @@ public class Driver {
         StatementContext tree = parse();
         walker.walk(translator, tree);
         return translator.getText();    	
+    }
+    
+    public Statement makeAst() {
+        ParseTreeWalker walker = new ParseTreeWalker();
+        StatementContext tree = parse();
+        AstBuilder builder = new AstBuilder();
+        walker.walk(builder, tree);
+        return builder.getStatement();
     }
     
     public TokenStream getTokenStream() {
