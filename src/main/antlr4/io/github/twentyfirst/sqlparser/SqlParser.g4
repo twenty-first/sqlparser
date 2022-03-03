@@ -42,7 +42,7 @@ simple_select :
     ( ORDER BY ordering_term ( COMMA ordering_term )* )?
     ( FOR ( FETCH | READ ) ONLY
     | OPTIMIZE FOR INTEGER ( ROW | ROWS )
-    | FETCH FIRST INTEGER ( ROW | ROWS ) ONLY 
+    | FETCH FIRST INTEGER? ( ROW | ROWS ) ONLY 
     )*
 	;
 	    

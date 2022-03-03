@@ -25,21 +25,28 @@ public class ParserTest extends TestBase {
     public void testConcat() throws RecognitionException
     {
         helper.parse("select * from t where c like concat(:c, '%')");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testQuestionMarkParameterMarkers() throws RecognitionException
     {
         helper.parse("select * from t where c like ?");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
+    }
+
+    @Test
+    public void testFetchWithoutNumber() throws RecognitionException
+    {
+        helper.parse("select * from t fetch first row only");
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testDeclareGlobalTemporary() throws RecognitionException
     {
         helper.parse("declare global temporary table session.t2 like t1");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
@@ -47,7 +54,7 @@ public class ParserTest extends TestBase {
     {
         helper.parse("declare global temporary table session.t (c1 " +
                 "decimal(12,0), c2 timestamp)");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
@@ -55,14 +62,14 @@ public class ParserTest extends TestBase {
     {
         helper.parse("declare global temporary table session/t1 like t2" + 
         		" on commit preserve rows with replace not logged");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     @Test
     public void testInsertIntoTemporaryTable() throws RecognitionException
     {
         helper.parse("insert into session/t values ( 10, 'a' )");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     @Test
@@ -71,7 +78,7 @@ public class ParserTest extends TestBase {
         helper.parse("create unique index session.i on session.t " + 
         		"(c1 asc, c2 asc, c3 asc) " +
         		"using stogroup sysdeflt priqty 1000 secqty 1000");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     @Test
@@ -84,14 +91,14 @@ public class ParserTest extends TestBase {
                 "t a , recurse b where b.c2 = a.c1 ) select " +
                 "c1, c2, level from recurse d order by level desc " +
                 "for read only");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     @Test
     public void testValuesLn() throws RecognitionException
     {
         helper.parse("values ln(:f)");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     @Test
@@ -99,67 +106,67 @@ public class ParserTest extends TestBase {
     {
         helper.parse("update t as a set a.c1 = :t-c1 " +
                 "where a.c2 in ( :t-c2, :d )");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     @Test
     public void testSeparatedIntegerInOperator() throws RecognitionException
     {
         helper.parse("select c1 from t where c2 in (760, 763, 764)");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     public void testContiguousIntegerInOperator() throws RecognitionException
     {
         helper.parse("select c1 from t where c2 in (760,763,764)");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     public void testAllocateDescriptor() throws RecognitionException
     {
         helper.parse("allocate descriptor 'desc' with max 500");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
     
     public void testDeallocateDescriptor() throws RecognitionException
     {
         helper.parse("deallocate descriptor 'desc'");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testSelectFromSelect() throws RecognitionException
     {
         helper.parse("select c1, c2 from ( select a1 as c1, a2 as c2 from t )");        
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testNextval() throws RecognitionException
     {
         helper.parse("select nextval for wsseq from sysibm.sysdummy1");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testWithUr() throws RecognitionException
     {
         helper.parse("select c1,c2 from t where c2 in  (:c2) with ur");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testCreateTemporaryIndex() throws RecognitionException
     {
         helper.parse("create unique index session.i on session.t (c1 asc, c2 asc, c3 asc)");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
     @Test
     public void testCharOfDate() throws RecognitionException
     {
         helper.parse("select char(date(c),iso) from t");
-		Assert.assertFalse(helper.isFailed());
+		    Assert.assertFalse(helper.isFailed());
     }
 
 }
