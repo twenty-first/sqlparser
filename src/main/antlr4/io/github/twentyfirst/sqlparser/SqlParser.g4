@@ -19,6 +19,7 @@ statement :
     | create_statement
     | commit_statement
 //    | call_statement
+    | set_option_statemment
     | catch_all
     )
     ;
@@ -94,7 +95,7 @@ into_clause :
     ;
 
 execute_statement :
-    EXECUTE IDENTIFIER using_clause?
+    EXECUTE IMMEDIATE? ( IDENTIFIER | input_parameter ) using_clause?
     ;
         
 open_statement :
@@ -149,6 +150,23 @@ commit_statement :
 //      combined_inout_parameter 
 //    )
 //    ;
+
+set_option_statemment :
+    SET OPTION option_clause
+    ;
+
+option_clause :
+    option_name EQUALS option_value
+    ;
+
+option_name :
+    IDENTIFIER
+    | COMMIT
+    ;
+
+option_value :
+    RPG_CONSTANT
+    ;
 
 where_clause :
     WHERE expression

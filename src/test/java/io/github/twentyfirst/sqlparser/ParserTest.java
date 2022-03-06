@@ -169,4 +169,26 @@ public class ParserTest extends TestBase {
 		    Assert.assertFalse(helper.isFailed());
     }
 
+    @Test
+    public void testRpgSetOptions() throws RecognitionException
+    {
+        helper.parse("set option naming=*sys, commit=*none");
+		    Assert.assertFalse(helper.isFailed());
+    }
+
+    @Test
+    public void testExecuteImmediate() throws RecognitionException
+    {
+        helper.parse("execute immediate :s");
+		    Assert.assertFalse(helper.isFailed());
+    }
+
+    // select c1 into :p from s.t where c2 = 'v'
+
+    @Test
+    public void testSelectInto() throws RecognitionException
+    {
+        helper.parse("select c1 into :p from s.t where c2 = 'v'");
+		    Assert.assertFalse(helper.isFailed());
+    }
 }

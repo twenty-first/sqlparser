@@ -36,6 +36,7 @@ FROM : F R O M ;
 GLOBAL : G L O B A L ;
 GROUP : G R O U P ;
 HAVING : H A V I N G ;
+IMMEDIATE : I M M E D I A T E ;
 IN : I N ;
 INDEX : I N D E X ;
 INNER : I N N E R ;
@@ -57,6 +58,7 @@ ON : O N ;
 ONLY : O N L Y ;
 OPEN : O P E N ;
 OPTIMIZE : O P T I M I Z E ;
+OPTION : O P T I O N ;
 OR : O R ;
 ORDER : O R D E R ;
 OUTER : O U T E R ;
@@ -115,6 +117,8 @@ LPAR        : '(' ;
 RPAR        : ')' ;
 
 IDENTIFIER : ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
+
+RPG_CONSTANT : '*' ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
 
 WHITESPACE : ( WS | NEWLINE )+  { setText(" "); } -> channel(HIDDEN) ;
 
