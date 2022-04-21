@@ -5,18 +5,22 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
 import io.github.twentyfirst.sqlparser.ast.Statement;
 
 public class Driver {
+
+	private static Logger log = LoggerFactory.getLogger(Driver.class);
 	
 	private CommonTokenStream tokenStream;
 	private SqlParser parser;
 	private StatementContext parseTree;
 	
 	public Driver(String statement) {
-		this(statement, null);
+		this(statement, new DefaultErrorListener(log));
 	}
 		
 	public Driver(String statement, ANTLRErrorListener errorListener) {
@@ -38,6 +42,9 @@ public class Driver {
     public StatementContext parse() {
     	if ( parseTree == null ) {
             parseTree = parser.statement();
+    	}
+    	if ( parser.getNumberOfSyntaxErrors() > 0 ) {
+    		throw new ParseException("Parse failed");
     	}
         return parseTree;
     }
