@@ -190,12 +190,17 @@ public class ParserTest extends TestBase {
 		    Assert.assertFalse(helper.isFailed());
     }
 
-    // select c1 into :p from s.t where c2 = 'v'
-
     @Test
     public void testSelectInto() throws RecognitionException
     {
         helper.parse("select c1 into :p from s.t where c2 = 'v'");
+		    Assert.assertFalse(helper.isFailed());
+    }
+
+    @Test
+    public void testSetOption() throws RecognitionException
+    {
+        helper.parse("set random_page_cost = 0.1");
 		    Assert.assertFalse(helper.isFailed());
     }
 }
