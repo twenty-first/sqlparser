@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.slf4j.Logger;
 
-import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
+import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.ast.Statement;
 
 public class Helper extends BaseErrorListener {

@@ -1,8 +1,7 @@
 package it.twenfir.sqlparser;
 
-import io.github.twentyfirst.sqlparser.SqlParserBaseListener;
-import io.github.twentyfirst.sqlparser.SqlParser.Into_clauseContext;
-import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
+import it.twenfir.sqlparser.SqlParser.Into_clauseContext;
+import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.ast.IntoClause;
 import it.twenfir.sqlparser.ast.Statement;
 
