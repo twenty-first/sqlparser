@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser.ast;
+package it.twenfir.sqlparser.ast;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

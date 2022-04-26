@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser;
+package it.twenfir.sqlparser;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;

@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser;
+package it.twenfir.sqlparser;
 
 import org.slf4j.Logger;
 

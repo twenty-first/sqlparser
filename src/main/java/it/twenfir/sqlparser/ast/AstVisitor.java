@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser.ast;
+package it.twenfir.sqlparser.ast;
 
 public interface AstVisitor<ValueT> {
 

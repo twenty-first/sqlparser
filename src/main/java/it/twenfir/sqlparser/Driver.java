@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser;
+package it.twenfir.sqlparser;
 
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -8,8 +8,10 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.twentyfirst.sqlparser.SqlLexer;
+import io.github.twentyfirst.sqlparser.SqlParser;
 import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
-import io.github.twentyfirst.sqlparser.ast.Statement;
+import it.twenfir.sqlparser.ast.Statement;
 
 public class Driver {
 

@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser;
+package it.twenfir.sqlparser;
 
 import static org.junit.Assert.assertThrows;
 

@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser.ast;
+package it.twenfir.sqlparser.ast;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 

@@ -1,4 +1,4 @@
-package io.github.twentyfirst.sqlparser;
+package it.twenfir.sqlparser;
 
 import java.util.Iterator;
 
@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.twentyfirst.sqlparser.ast.IntoClause;
-import io.github.twentyfirst.sqlparser.ast.Statement;
+import it.twenfir.sqlparser.ast.IntoClause;
+import it.twenfir.sqlparser.ast.Statement;
 
 public class AstTest extends TestBase {
 

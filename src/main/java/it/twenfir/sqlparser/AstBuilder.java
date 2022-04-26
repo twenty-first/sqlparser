@@ -1,9 +1,10 @@
-package io.github.twentyfirst.sqlparser;
+package it.twenfir.sqlparser;
 
+import io.github.twentyfirst.sqlparser.SqlParserBaseListener;
 import io.github.twentyfirst.sqlparser.SqlParser.Into_clauseContext;
 import io.github.twentyfirst.sqlparser.SqlParser.StatementContext;
-import io.github.twentyfirst.sqlparser.ast.IntoClause;
-import io.github.twentyfirst.sqlparser.ast.Statement;
+import it.twenfir.sqlparser.ast.IntoClause;
+import it.twenfir.sqlparser.ast.Statement;
 
 public class AstBuilder extends SqlParserBaseListener {
 
