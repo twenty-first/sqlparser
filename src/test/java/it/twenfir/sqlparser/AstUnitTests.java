@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 import it.twenfir.sqlparser.ast.IntoClause;
 import it.twenfir.sqlparser.ast.Statement;
 
-public class AstTest extends TestBase {
+public class AstUnitTests extends TestBase {
 
-	static final Logger log = LoggerFactory.getLogger(AstTest.class);
+	static final Logger log = LoggerFactory.getLogger(AstUnitTests.class);
 	
-	public AstTest() {
+	public AstUnitTests() {
 		super(log);
 	}
 
