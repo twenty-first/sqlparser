@@ -123,18 +123,21 @@ public class ParserTest extends TestBase {
 		    Assert.assertFalse(helper.isFailed());
     }
 
+    //@Test
     public void testContiguousIntegerInOperator() throws RecognitionException
     {
         helper.parse("select c1 from t where c2 in (760,763,764)");
 		    Assert.assertFalse(helper.isFailed());
     }
     
+    //@Test
     public void testAllocateDescriptor() throws RecognitionException
     {
         helper.parse("allocate descriptor 'desc' with max 500");
 		    Assert.assertFalse(helper.isFailed());
     }
     
+    //@Test
     public void testDeallocateDescriptor() throws RecognitionException
     {
         helper.parse("deallocate descriptor 'desc'");

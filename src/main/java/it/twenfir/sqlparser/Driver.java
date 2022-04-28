@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.twenfir.antlr.parser.LoggingTokenSource;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.ast.Statement;
 
@@ -30,7 +31,7 @@ public class Driver {
         	lexer.removeErrorListeners();
         	lexer.addErrorListener(errorListener);
         }
-        SqlTokenSource source = new SqlTokenSource(lexer);
+        LoggingTokenSource source = new LoggingTokenSource(lexer);
         tokenStream = new CommonTokenStream(source);
         parser = new SqlParser(tokenStream);
         if ( errorListener != null ) {
