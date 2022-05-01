@@ -1,6 +1,8 @@
 package it.twenfir.sqlparser;
 
-import it.twenfir.sqlparser.SqlParser.Into_clauseContext;
+import it.twenfir.antlr.ast.AstHelper;
+import it.twenfir.antlr.ast.Location;
+import it.twenfir.sqlparser.SqlParser.IntoClauseContext;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.ast.IntoClause;
 import it.twenfir.sqlparser.ast.Statement;
@@ -15,13 +17,15 @@ public class AstBuilder extends SqlParserBaseListener {
 	
 	@Override
 	public void enterStatement(StatementContext ctx) {
-		statement = new Statement(ctx);
+		Location location = AstHelper.location(ctx);
+		statement = new Statement(location);
 	}
 
 	
 	@Override
-	public void enterInto_clause(Into_clauseContext ctx) {
-		statement.addIntoClause(new IntoClause(ctx));
+	public void enterIntoClause(IntoClauseContext ctx) {
+		Location location = AstHelper.location(ctx);
+		statement.addChild(new IntoClause(location));
 	}
 
 

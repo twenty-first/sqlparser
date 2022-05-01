@@ -1,14 +1,13 @@
 package it.twenfir.sqlparser.ast;
 
-import org.antlr.v4.runtime.ParserRuleContext;
-
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
+import it.twenfir.antlr.ast.Location;
 
 public class IntoClause extends AstNode {
 
-	public IntoClause(ParserRuleContext context) {
-		super(context);
+	public IntoClause(Location location) {
+		super(location);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
