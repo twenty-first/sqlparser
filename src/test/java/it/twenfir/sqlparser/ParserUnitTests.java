@@ -206,4 +206,11 @@ public class ParserUnitTests extends TestBase {
         helper.parse("set random_page_cost = 0.1");
 		    Assert.assertFalse(helper.isFailed());
     }
+
+    @Test
+    public void testTableExistenceCheck() throws RecognitionException
+    {
+        helper.parse("select 1 as v from t where false");
+	    Assert.assertFalse(helper.isFailed());
+}
 }
