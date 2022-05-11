@@ -2,7 +2,9 @@ lexer grammar SqlLexer;
 
 // Keywords
 
+ADD : A D D ;
 ALL : A L L ;
+ALTER : A L T E R ;
 AND : A N D ;
 AS : A S ;
 ASC : A S C ;
@@ -46,6 +48,7 @@ INSERT : I N S E R T ;
 INTO : I N T O ;
 IS : I S ;
 JOIN : J O I N ;
+KEY : K E Y ;
 LEFT : L E F T ;
 LIKE : L I K E ;
 LN : L N ;
@@ -66,6 +69,7 @@ OR : O R ;
 ORDER : O R D E R ;
 OUTER : O U T E R ;
 PRESERVE : P R E S E R V E ;
+PRIMARY : P R I M A R Y ;
 READ : R E A D ;
 REPLACE : R E P L A C E ;
 RIGHT : R I G H T ;

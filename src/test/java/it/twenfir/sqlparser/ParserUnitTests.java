@@ -234,4 +234,11 @@ public class ParserUnitTests extends TestBase {
         helper.parse("create temporary table if not exists t1 as select * from t2 with no data");
 	    Assert.assertFalse(helper.isFailed());
     }
+
+    @Test
+    public void testAlterAddPrimaryKey() throws RecognitionException
+    {
+        helper.parse("alter table t add primary key ( c )");
+	    Assert.assertFalse(helper.isFailed());
+    }
 }

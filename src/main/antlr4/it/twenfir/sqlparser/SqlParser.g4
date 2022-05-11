@@ -18,6 +18,7 @@ statement :
     | declareStatement
     | createIndexStatement
     | createTableStatement
+    | alterTableStatement
     | commitStatement
 //    | callStatement
     | setOptionStatemment
@@ -137,6 +138,10 @@ createIndexStatement :
 	CREATE UNIQUE? INDEX index ON table LPAR orderingTerm ( COMMA orderingTerm )* RPAR 
 	( USING catchAll )?
 	;
+
+alterTableStatement :
+ALTER TABLE IDENTIFIER ADD PRIMARY KEY LPAR IDENTIFIER ( COMMA IDENTIFIER )* RPAR
+    ;
 
 commitStatement :
 	COMMIT WORK?
