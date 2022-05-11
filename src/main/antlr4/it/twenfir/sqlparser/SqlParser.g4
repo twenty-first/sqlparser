@@ -296,7 +296,7 @@ function :
 	| DAYS
 	| MAX
 	| MONTH
-	| VALUE
+//	| VALUE
 	| YEAR
 	)
 	;
@@ -436,7 +436,7 @@ sqlWord :
     | SET
     | TO
     | USING
-    | VALUE
+//    | VALUE
     | WHEN
     | IDENTIFIER
     | STRING

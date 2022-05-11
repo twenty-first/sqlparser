@@ -212,5 +212,19 @@ public class ParserUnitTests extends TestBase {
     {
         helper.parse("select 1 as v from t where false");
 	    Assert.assertFalse(helper.isFailed());
-}
+    }
+
+    @Test
+    public void testRecordExistenceCheck() throws RecognitionException
+    {
+        helper.parse("select 1 as v from t where f = ?");
+	    Assert.assertFalse(helper.isFailed());
+    }
+
+    @Test
+    public void testKeywordAsColumnName() throws RecognitionException
+    {
+        helper.parse("select value from t");
+	    Assert.assertFalse(helper.isFailed());
+    }
 }

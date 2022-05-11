@@ -83,7 +83,7 @@ UNIQUE : U N I Q U E ;
 UPDATE : U P D A T E ;
 UR : U R ;
 USING : U S I N G ;
-VALUE : V A L U E ;
+//VALUE : V A L U E ;
 VALUES : V A L U E S ;
 WHEN : W H E N ;
 WHERE : W H E R E ;
