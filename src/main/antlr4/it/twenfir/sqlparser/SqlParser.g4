@@ -16,7 +16,8 @@ statement :
     | openStatement
     | executeStatement
     | declareStatement
-    | createStatement
+    | createIndexStatement
+    | createTableStatement
     | commitStatement
 //    | callStatement
     | setOptionStatemment
@@ -128,7 +129,11 @@ temporaryTableOption :
 	)
 	;
 
-createStatement :
+createTableStatement :
+    CREATE TEMPORARY? TABLE ( IF NOT EXISTS )? IDENTIFIER AS simpleSelect ( WITH NO? DATA )?
+    ;
+
+createIndexStatement :
 	CREATE UNIQUE? INDEX index ON table LPAR orderingTerm ( COMMA orderingTerm )* RPAR 
 	( USING catchAll )?
 	;
