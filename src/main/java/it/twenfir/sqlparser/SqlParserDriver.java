@@ -1,6 +1,5 @@
 package it.twenfir.sqlparser;
 
-import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
@@ -8,43 +7,38 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.twenfir.antlr.exception.ParseException;
 import it.twenfir.antlr.parser.LoggingTokenSource;
+import it.twenfir.antlr.parser.ParserDriverBase;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.ast.Statement;
 
-public class Driver {
+public class SqlParserDriver extends ParserDriverBase {
 
-	private static Logger log = LoggerFactory.getLogger(Driver.class);
+	private static Logger log = LoggerFactory.getLogger(SqlParserDriver.class);
 	
 	private CommonTokenStream tokenStream;
 	private SqlParser parser;
 	private StatementContext parseTree;
 	
-	public Driver(String statement) {
-		this(statement, new DefaultErrorListener(log));
-	}
-		
-	public Driver(String statement, ANTLRErrorListener errorListener) {
+	public SqlParserDriver(String statement) {
+        super("sqlparser", log);
         ANTLRInputStream inputStream = new ANTLRInputStream(statement);
         SqlLexer lexer = new SqlLexer(inputStream);
-        if ( errorListener != null ) {
-        	lexer.removeErrorListeners();
-        	lexer.addErrorListener(errorListener);
-        }
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(this);
         LoggingTokenSource source = new LoggingTokenSource(lexer);
         tokenStream = new CommonTokenStream(source);
         parser = new SqlParser(tokenStream);
-        if ( errorListener != null ) {
-        	parser.removeErrorListeners();
-        	parser.addErrorListener(errorListener);
-        }
+        parser.removeErrorListeners();
+        parser.addErrorListener(this);
 	}
 	
     public StatementContext parse() {
     	if ( parseTree == null ) {
             parseTree = parser.statement();
     	}
-    	if ( parser.getNumberOfSyntaxErrors() > 0 ) {
+    	if ( isErrors() ) {
     		throw new ParseException("Parse failed");
     	}
         return parseTree;
