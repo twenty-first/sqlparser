@@ -1,8 +1,9 @@
 package it.twenfir.sqlparser.ast;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Iterator;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +19,16 @@ public class AstUnitTests extends TestBase {
 	}
 
 	@Test
-	public void test() {
+	public void selectCountTest() {
 		String s = "select count(*) into :c :b from t where p=:a and f='V' and o in ('P','A')";
-		Statement ast = helper.ast(s);
-		Assert.assertNotNull(ast);
-		Iterator<IntoClause> iter = ast.getIntoClauses();
-		Assert.assertNotNull(iter.next());
-		Assert.assertFalse(iter.hasNext());
+		Statement statement = helper.ast(s);
+		SimpleSelect simpleSelect = statement.getSelectStatements().next().getSelectExpression().getSimpleSelects().next();
+		CombinedOutputParameter cop = simpleSelect.getIntoClause().getCombinedOutputParameters().next();
+		assertEquals("c", cop.getOutputParameter().getParameter().getName());
+		assertEquals("b", cop.getIndicator().getParameter().getName());
+		Expression expression = simpleSelect.getWhereClause().getExpression();
+		Iterator<Term> termIter = expression.getTerms();
+		termIter.next();
+		assertEquals("a", termIter.next().getFactors().next().getCombinedInputParameter().getInputParameter().getParameter().getName());
 	}
 }

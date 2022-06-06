@@ -52,11 +52,10 @@ public class SqlParserDriver extends ParserDriverBase {
     }
     
     public Statement makeAst() {
-        ParseTreeWalker walker = new ParseTreeWalker();
         StatementContext tree = parse();
         AstBuilder builder = new AstBuilder();
-        walker.walk(builder, tree);
-        return builder.getStatement();
+        Statement statement = builder.visitStatement(tree);
+        return statement;
     }
     
     public TokenStream getTokenStream() {

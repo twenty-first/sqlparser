@@ -6,14 +6,14 @@ import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class IntoClause extends AstNode {
+public class Term extends AstNode {
 
-	public IntoClause(Location location) {
+	public Term(Location location) {
 		super(location);
 	}
 	
-	public Iterator<CombinedOutputParameter> getCombinedOutputParameters() {
-		return getChildren(CombinedOutputParameter.class);
+	public Iterator<Factor> getFactors() {
+		return getChildren(Factor.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

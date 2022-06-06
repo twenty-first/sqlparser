@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
-import it.twenfir.antlr.ast.ChildrenIterator;
 import it.twenfir.antlr.ast.Location;
 
 public class Statement extends AstNode {
@@ -13,8 +12,8 @@ public class Statement extends AstNode {
 		super(location);
 	}
 	
-	public Iterator<IntoClause> getIntoClauses() {
-		return new ChildrenIterator<IntoClause>(getChildren(), IntoClause.class);
+	public Iterator<SelectStatement> getSelectStatements() {
+		return getChildren(SelectStatement.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

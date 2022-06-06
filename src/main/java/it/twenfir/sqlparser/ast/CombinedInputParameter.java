@@ -1,19 +1,21 @@
 package it.twenfir.sqlparser.ast;
 
-import java.util.Iterator;
-
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class IntoClause extends AstNode {
+public class CombinedInputParameter extends AstNode {
 
-	public IntoClause(Location location) {
+	public CombinedInputParameter(Location location) {
 		super(location);
 	}
-	
-	public Iterator<CombinedOutputParameter> getCombinedOutputParameters() {
-		return getChildren(CombinedOutputParameter.class);
+
+	public InputParameter getInputParameter() {
+		return getChild(InputParameter.class);
+	}
+
+	public Indicator getIndicator() {
+		return getChild(Indicator.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

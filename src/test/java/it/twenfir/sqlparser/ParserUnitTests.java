@@ -210,4 +210,10 @@ public class ParserUnitTests extends TestBase {
     {
         helper.parse("alter table t add primary key ( c )");
     }
+
+    @Test
+    public void testLexicographicCondition() throws ParseException
+    {
+        helper.parse("select a, b, c from t where ( a, b ) >= ( ?, ? ) order by a, b, c");
+    }
 }
