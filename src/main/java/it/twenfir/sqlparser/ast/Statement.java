@@ -16,6 +16,10 @@ public class Statement extends AstNode {
 		return getChildren(SelectStatement.class);
 	}
 	
+	public Iterator<SetOptionStatement> getSetOptionStatements() {
+		return getChildren(SetOptionStatement.class);
+	}
+	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
     	return visitor.visit(this);
     }

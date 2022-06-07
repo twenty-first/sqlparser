@@ -4,18 +4,17 @@ import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class Term extends AstNode {
+public class OptionValue extends AstNode {
 
-	public Term(Location location) {
+	private String value;
+	
+	public OptionValue(Location location, String value) {
 		super(location);
+		this.value = value;
 	}
 	
-	public Factor getFactor() {
-		return getChild(Factor.class);
-	}
-	
-	public FunctionCall getFunctionCall() {
-		return getChild(FunctionCall.class);
+	public String getValue() {
+		return value;
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

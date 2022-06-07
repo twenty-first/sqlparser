@@ -6,18 +6,14 @@ import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class SelectStatement extends AstNode {
+public class ExprList extends AstNode {
 
-	public SelectStatement(Location location) {
+	public ExprList(Location location) {
 		super(location);
 	}
 	
-	public Iterator<LocalTableDefinition> getLocalTableDefinitions() {
-		return getChildren(LocalTableDefinition.class);
-	}
-	
-	public SelectExpression getSelectExpression() {
-		return getChild(SelectExpression.class);
+	public Iterator<Expression> getExpressions() {
+		return getChildren(Expression.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

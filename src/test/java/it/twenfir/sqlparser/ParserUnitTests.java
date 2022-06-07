@@ -158,7 +158,7 @@ public class ParserUnitTests extends TestBase {
     }
 
     @Test
-    public void testRpgSetOptions() throws ParseException
+    public void testDb2SetOptions() throws ParseException
     {
         helper.parse("set option naming=*sys, commit=*none");
     }

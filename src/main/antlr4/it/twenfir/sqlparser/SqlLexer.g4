@@ -52,6 +52,7 @@ KEY : K E Y ;
 LEFT : L E F T ;
 LIKE : L I K E ;
 LN : L N ;
+LOCATE : L O C A T E ;
 LOGGED : L O G G E D ;
 MAX : M A X ;
 MONTH : M O N T H ;
@@ -125,7 +126,7 @@ RPAR        : ')' ;
 
 IDENTIFIER : ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
 
-RPG_CONSTANT : '*' ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
+DB2_CONSTANT : '*' ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
 
 WHITESPACE : ( WS | NEWLINE )+  { setText(" "); } -> channel(HIDDEN) ;
 

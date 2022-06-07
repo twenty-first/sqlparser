@@ -20,7 +20,22 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visit(ExprList node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visit(Factor node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visit(Function node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visit(FunctionCall node) {
         return visitChildren(node);
     }
 
@@ -40,6 +55,26 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visit(LocalTableDefinition node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visit(OptionClause node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visit(OptionName node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visit(OptionValue node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visit(OutputParameter node) {
         return visitChildren(node);
     }
@@ -50,12 +85,22 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visit(SelectColumn node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visit(SelectExpression node) {
         return visitChildren(node);
     }
 
     @Override
     public ValueT visit(SelectStatement node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visit(SetOptionStatement node) {
         return visitChildren(node);
     }
 

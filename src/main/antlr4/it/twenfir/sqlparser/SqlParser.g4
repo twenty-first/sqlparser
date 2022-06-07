@@ -21,7 +21,7 @@ statement :
     | alterTableStatement
     | commitStatement
 //    | callStatement
-    | setOptionStatemment
+    | setOptionStatement
     | catchAll
     )
     ;
@@ -161,8 +161,8 @@ commitStatement :
 //    )
 //    ;
 
-setOptionStatemment :
-    SET OPTION optionClause
+setOptionStatement :
+    SET OPTION optionClause ( COMMA optionClause )*
     ;
 
 optionClause :
@@ -175,7 +175,7 @@ optionName :
     ;
 
 optionValue :
-    RPG_CONSTANT
+    DB2_CONSTANT
     ;
 
 whereClause :
@@ -292,18 +292,24 @@ term :
     | decimalCall
     | dateCall
     | timestampCall
-    | function exprList?
-    | IDENTIFIER exprList?
+//    | function exprList?
+//    | IDENTIFIER exprList?
+    | functionCall
     | exprList 
     | LPAR selectExpression RPAR
     | CASE expression? ( WHEN expression THEN expression )+ ( ELSE expression )? END
     )
 	;
 
+functionCall :
+    ( function | IDENTIFIER ) exprList?
+    ;
+    
 function :
 	( CONCAT
 	| DAY
 	| DAYS
+	| LOCATE
 	| MAX
 	| MONTH
 //	| VALUE
