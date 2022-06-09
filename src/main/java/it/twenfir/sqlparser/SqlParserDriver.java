@@ -3,7 +3,6 @@ package it.twenfir.sqlparser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +19,7 @@ public class SqlParserDriver extends ParserDriverBase {
 	private CommonTokenStream tokenStream;
 	private SqlParser parser;
 	private StatementContext parseTree;
+	private Statement statement;
 	
 	public SqlParserDriver(String statement) {
         super("sqlparser", log);
@@ -44,17 +44,12 @@ public class SqlParserDriver extends ParserDriverBase {
         return parseTree;
     }
     
-    public String translate(Translator translator) {
-        ParseTreeWalker walker = new ParseTreeWalker();
-        StatementContext tree = parse();
-        walker.walk(translator, tree);
-        return translator.getText();    	
-    }
-    
     public Statement makeAst() {
-        StatementContext tree = parse();
-        AstBuilder builder = new AstBuilder();
-        Statement statement = builder.visitStatement(tree);
+    	if ( statement == null ) {
+            StatementContext tree = parse();
+            AstBuilder builder = new AstBuilder();
+            statement = builder.visitStatement(tree);
+    	}
         return statement;
     }
     

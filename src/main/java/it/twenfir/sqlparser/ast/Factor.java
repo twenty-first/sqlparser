@@ -15,7 +15,12 @@ public class Factor extends AstNode {
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
-    	return visitor.visit(this);
+		if ( visitor instanceof SqlVisitor ) {
+			return ((SqlVisitor<? extends ValueT>) visitor).visitFactor(this);
+    	}
+    	else {
+    		return visitor.visit(this);
+    	}
     }
 
 }

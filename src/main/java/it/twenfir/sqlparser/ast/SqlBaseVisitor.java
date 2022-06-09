@@ -5,122 +5,122 @@ import it.twenfir.antlr.ast.BaseAstVisitor;
 public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> implements SqlVisitor<ValueT> {
 
     @Override
-    public ValueT visit(CombinedInputParameter node) {
+    public ValueT visitCombinedInputParameter(CombinedInputParameter node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(CombinedOutputParameter node) {
+    public ValueT visitCombinedOutputParameter(CombinedOutputParameter node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Expression node) {
+    public ValueT visitExpression(Expression node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(ExprList node) {
+    public ValueT visitExprList(ExprList node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Factor node) {
+    public ValueT visitFactor(Factor node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Function node) {
+    public ValueT visitFunction(Function node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(FunctionCall node) {
+    public ValueT visitFunctionCall(FunctionCall node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Indicator node) {
+    public ValueT visitIndicator(Indicator node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(InputParameter node) {
+    public ValueT visitInputParameter(InputParameter node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(IntoClause node) {
+    public ValueT visitIntoClause(IntoClause node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(LocalTableDefinition node) {
+    public ValueT visitLocalTableDefinition(LocalTableDefinition node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(OptionClause node) {
+    public ValueT visitOptionClause(OptionClause node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(OptionName node) {
+    public ValueT visitOptionName(OptionName node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(OptionValue node) {
+    public ValueT visitOptionValue(OptionValue node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(OutputParameter node) {
+    public ValueT visitOutputParameter(OutputParameter node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Parameter node) {
+    public ValueT visitParameter(Parameter node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(SelectColumn node) {
+    public ValueT visitSelectColumn(SelectColumn node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(SelectExpression node) {
+    public ValueT visitSelectExpression(SelectExpression node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(SelectStatement node) {
+    public ValueT visitSelectStatement(SelectStatement node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(SetOptionStatement node) {
+    public ValueT visitSetOptionStatement(SetOptionStatement node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(SimpleSelect node) {
+    public ValueT visitSimpleSelect(SimpleSelect node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Statement node) {
+    public ValueT visitStatement(Statement node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(Term node) {
+    public ValueT visitTerm(Term node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visit(WhereClause node) {
+    public ValueT visitWhereClause(WhereClause node) {
         return visitChildren(node);
     }
     

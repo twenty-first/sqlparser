@@ -18,7 +18,12 @@ public class Function extends AstNode {
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
-    	return visitor.visit(this);
+		if ( visitor instanceof SqlVisitor ) {
+			return ((SqlVisitor<? extends ValueT>) visitor).visitFunction(this);
+    	}
+    	else {
+    		return visitor.visit(this);
+    	}
     }
 
 }

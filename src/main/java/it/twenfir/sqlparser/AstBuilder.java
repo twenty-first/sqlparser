@@ -200,7 +200,8 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public SelectColumn visitSelectColumn(SelectColumnContext ctx) {
 		Location location = AstHelper.location(ctx);
-		SelectColumn node = new SelectColumn(location);
+		String outputName = ctx.IDENTIFIER() != null ? ctx.IDENTIFIER().getText() : null;
+		SelectColumn node = new SelectColumn(location, outputName);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

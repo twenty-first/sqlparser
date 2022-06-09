@@ -15,7 +15,12 @@ public class Indicator extends AstNode {
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
-    	return visitor.visit(this);
+		if ( visitor instanceof SqlVisitor ) {
+			return ((SqlVisitor<? extends ValueT>) visitor).visitIndicator(this);
+    	}
+    	else {
+    		return visitor.visit(this);
+    	}
     }
 
 }

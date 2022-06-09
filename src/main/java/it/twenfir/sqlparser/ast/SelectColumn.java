@@ -6,8 +6,11 @@ import it.twenfir.antlr.ast.Location;
 
 public class SelectColumn extends AstNode {
 
-	public SelectColumn(Location location) {
+	private String outputName;
+	
+	public SelectColumn(Location location, String outputName) {
 		super(location);
+		this.outputName = outputName;
 	}
 
 	public Expression getExpression() {
@@ -15,7 +18,12 @@ public class SelectColumn extends AstNode {
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
-    	return visitor.visit(this);
+		if ( visitor instanceof SqlVisitor ) {
+			return ((SqlVisitor<? extends ValueT>) visitor).visitSelectColumn(this);
+    	}
+    	else {
+    		return visitor.visit(this);
+    	}
     }
 
 }

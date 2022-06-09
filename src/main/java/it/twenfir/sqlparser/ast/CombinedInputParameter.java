@@ -19,7 +19,12 @@ public class CombinedInputParameter extends AstNode {
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
-    	return visitor.visit(this);
+		if ( visitor instanceof SqlVisitor ) {
+			return ((SqlVisitor<? extends ValueT>) visitor).visitCombinedInputParameter(this);
+    	}
+    	else {
+    		return visitor.visit(this);
+    	}
     }
 
 }
