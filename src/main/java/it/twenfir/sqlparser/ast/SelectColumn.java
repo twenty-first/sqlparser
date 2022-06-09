@@ -13,6 +13,10 @@ public class SelectColumn extends AstNode {
 		this.outputName = outputName;
 	}
 
+	public String getOutputName() {
+		return outputName;
+	}
+	
 	public Expression getExpression() {
 		return getChild(Expression.class);
 	}
