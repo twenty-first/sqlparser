@@ -1,6 +1,7 @@
 package it.twenfir.sqlparser;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class SqlParserDriver extends ParserDriverBase {
 	
 	public SqlParserDriver(String statement) {
         super("sqlparser", log);
-        ANTLRInputStream inputStream = new ANTLRInputStream(statement);
+        CodePointCharStream inputStream = CharStreams.fromString(statement);
         SqlLexer lexer = new SqlLexer(inputStream);
         lexer.removeErrorListeners();
         lexer.addErrorListener(this);
