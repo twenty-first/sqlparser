@@ -3,22 +3,27 @@ package it.twenfir.sqlparser;
 import it.twenfir.antlr.ast.AstHelper;
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.Location;
+import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
 import it.twenfir.sqlparser.SqlParser.CombinedInputParameterContext;
 import it.twenfir.sqlparser.SqlParser.CombinedOutputParameterContext;
+import it.twenfir.sqlparser.SqlParser.DeclareCursorStatementContext;
 import it.twenfir.sqlparser.SqlParser.ExprListContext;
 import it.twenfir.sqlparser.SqlParser.ExpressionContext;
 import it.twenfir.sqlparser.SqlParser.FactorContext;
+import it.twenfir.sqlparser.SqlParser.FetchStatementContext;
 import it.twenfir.sqlparser.SqlParser.FunctionCallContext;
 import it.twenfir.sqlparser.SqlParser.FunctionContext;
 import it.twenfir.sqlparser.SqlParser.IndicatorContext;
 import it.twenfir.sqlparser.SqlParser.InputParameterContext;
 import it.twenfir.sqlparser.SqlParser.IntoClauseContext;
 import it.twenfir.sqlparser.SqlParser.LocalTableDefinitionContext;
+import it.twenfir.sqlparser.SqlParser.OpenStatementContext;
 import it.twenfir.sqlparser.SqlParser.OptionClauseContext;
 import it.twenfir.sqlparser.SqlParser.OptionNameContext;
 import it.twenfir.sqlparser.SqlParser.OptionValueContext;
 import it.twenfir.sqlparser.SqlParser.OutputParameterContext;
 import it.twenfir.sqlparser.SqlParser.ParameterContext;
+import it.twenfir.sqlparser.SqlParser.PrepareStatementContext;
 import it.twenfir.sqlparser.SqlParser.SelectColumnContext;
 import it.twenfir.sqlparser.SqlParser.SelectExpressionContext;
 import it.twenfir.sqlparser.SqlParser.SelectStatementContext;
@@ -26,23 +31,29 @@ import it.twenfir.sqlparser.SqlParser.SetOptionStatementContext;
 import it.twenfir.sqlparser.SqlParser.SimpleSelectContext;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.SqlParser.TermContext;
+import it.twenfir.sqlparser.SqlParser.UsingClauseContext;
 import it.twenfir.sqlparser.SqlParser.WhereClauseContext;
+import it.twenfir.sqlparser.ast.CloseStatement;
 import it.twenfir.sqlparser.ast.CombinedInputParameter;
 import it.twenfir.sqlparser.ast.CombinedOutputParameter;
+import it.twenfir.sqlparser.ast.DeclareCursorStatement;
 import it.twenfir.sqlparser.ast.ExprList;
 import it.twenfir.sqlparser.ast.Expression;
 import it.twenfir.sqlparser.ast.Factor;
+import it.twenfir.sqlparser.ast.FetchStatement;
 import it.twenfir.sqlparser.ast.Function;
 import it.twenfir.sqlparser.ast.FunctionCall;
 import it.twenfir.sqlparser.ast.Indicator;
 import it.twenfir.sqlparser.ast.InputParameter;
 import it.twenfir.sqlparser.ast.IntoClause;
 import it.twenfir.sqlparser.ast.LocalTableDefinition;
+import it.twenfir.sqlparser.ast.OpenStatement;
 import it.twenfir.sqlparser.ast.OptionClause;
 import it.twenfir.sqlparser.ast.OptionName;
 import it.twenfir.sqlparser.ast.OptionValue;
 import it.twenfir.sqlparser.ast.OutputParameter;
 import it.twenfir.sqlparser.ast.Parameter;
+import it.twenfir.sqlparser.ast.PrepareStatement;
 import it.twenfir.sqlparser.ast.SelectColumn;
 import it.twenfir.sqlparser.ast.SelectExpression;
 import it.twenfir.sqlparser.ast.SelectStatement;
@@ -50,9 +61,19 @@ import it.twenfir.sqlparser.ast.SetOptionStatement;
 import it.twenfir.sqlparser.ast.SimpleSelect;
 import it.twenfir.sqlparser.ast.Statement;
 import it.twenfir.sqlparser.ast.Term;
+import it.twenfir.sqlparser.ast.UsingClause;
 import it.twenfir.sqlparser.ast.WhereClause;
 
 public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
+
+	@Override
+	public CloseStatement visitCloseStatement(CloseStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = ctx.IDENTIFIER().getText();
+		CloseStatement node = new CloseStatement(location, name);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
 
 	@Override
 	public CombinedInputParameter visitCombinedInputParameter(CombinedInputParameterContext ctx) {
@@ -70,6 +91,16 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		return node;
 	}
 
+	@Override
+	public DeclareCursorStatement visitDeclareCursorStatement(DeclareCursorStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = ctx.name.getText();
+		String stmt = ctx.stmt.getText();
+		DeclareCursorStatement node = new DeclareCursorStatement(location, name, stmt);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+	
 	@Override
 	public Expression visitExpression(ExpressionContext ctx) {
 		Location location = AstHelper.location(ctx);
@@ -90,6 +121,15 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public Factor visitFactor(FactorContext ctx) {
 		Location location = AstHelper.location(ctx);
 		Factor node = new Factor(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public FetchStatement visitFetchStatement(FetchStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = ctx.IDENTIFIER().getText();
+		FetchStatement node = new FetchStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
@@ -140,6 +180,15 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public LocalTableDefinition visitLocalTableDefinition(LocalTableDefinitionContext ctx) {
 		Location location = AstHelper.location(ctx);
 		LocalTableDefinition node = new LocalTableDefinition(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public OpenStatement visitOpenStatement(OpenStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = ctx.IDENTIFIER().getText();
+		OpenStatement node = new OpenStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
@@ -207,6 +256,15 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	}
 
 	@Override
+	public PrepareStatement visitPrepareStatement(PrepareStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = ctx.IDENTIFIER().getText();
+		PrepareStatement node = new PrepareStatement(location, name);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
 	public SelectExpression visitSelectExpression(SelectExpressionContext ctx) {
 		Location location = AstHelper.location(ctx);
 		SelectExpression node = new SelectExpression(location);
@@ -250,6 +308,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public Term visitTerm(TermContext ctx) {
 		Location location = AstHelper.location(ctx);
 		Term node = new Term(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public UsingClause visitUsingClause(UsingClauseContext ctx) {
+		Location location = AstHelper.location(ctx);
+		UsingClause node = new UsingClause(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

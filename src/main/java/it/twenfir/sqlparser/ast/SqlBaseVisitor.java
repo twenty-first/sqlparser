@@ -5,6 +5,11 @@ import it.twenfir.antlr.ast.BaseAstVisitor;
 public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> implements SqlVisitor<ValueT> {
 
     @Override
+    public ValueT visitCloseStatement(CloseStatement node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitCombinedInputParameter(CombinedInputParameter node) {
         return visitChildren(node);
     }
@@ -14,6 +19,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
         return visitChildren(node);
     }
 
+    @Override
+    public ValueT visitDeclareCursorStatement(DeclareCursorStatement node) {
+        return visitChildren(node);
+    }
+    
     @Override
     public ValueT visitExpression(Expression node) {
         return visitChildren(node);
@@ -26,6 +36,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
 
     @Override
     public ValueT visitFactor(Factor node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visitFetchStatement(FetchStatement node) {
         return visitChildren(node);
     }
 
@@ -60,6 +75,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitOpenStatement(OpenStatement node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitOptionClause(OptionClause node) {
         return visitChildren(node);
     }
@@ -81,6 +101,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
 
     @Override
     public ValueT visitParameter(Parameter node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visitPrepareStatement(PrepareStatement node) {
         return visitChildren(node);
     }
 
@@ -116,6 +141,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
 
     @Override
     public ValueT visitTerm(Term node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visitUsingClause(UsingClause node) {
         return visitChildren(node);
     }
 

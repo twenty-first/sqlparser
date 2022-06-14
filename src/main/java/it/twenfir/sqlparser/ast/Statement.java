@@ -12,6 +12,26 @@ public class Statement extends AstNode {
 		super(location);
 	}
 	
+	public Iterator<CloseStatement> getCloseStatements() {
+		return getChildren(CloseStatement.class);
+	}
+	
+	public Iterator<DeclareCursorStatement> getDeclareCursorStatements() {
+		return getChildren(DeclareCursorStatement.class);
+	}
+	
+	public Iterator<FetchStatement> getFetchStatements() {
+		return getChildren(FetchStatement.class);
+	}
+	
+	public Iterator<OpenStatement> getOpenStatements() {
+		return getChildren(OpenStatement.class);
+	}
+	
+	public Iterator<PrepareStatement> getPrepareStatements() {
+		return getChildren(PrepareStatement.class);
+	}
+	
 	public Iterator<SelectStatement> getSelectStatements() {
 		return getChildren(SelectStatement.class);
 	}

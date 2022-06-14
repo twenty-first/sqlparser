@@ -15,7 +15,11 @@ statement :
     | fetchStatement
     | openStatement
     | executeStatement
-    | declareStatement
+    | declareCursorStatement
+    | prepareStatement
+    | openStatement
+    | closeStatement
+    | declareTempTableStatement
     | createIndexStatement
     | createTableStatement
     | alterTableStatement
@@ -89,7 +93,7 @@ valuesStatement :
 	;
 	
 fetchStatement :
-    FETCH IDENTIFIER intoClause
+    FETCH NEXT? FROM? IDENTIFIER intoClause
     ;
         
 intoClause :
@@ -111,7 +115,19 @@ usingClause :
     )
     ;
 
-declareStatement :
+declareCursorStatement :
+    DECLARE CURSOR name = IDENTIFIER FOR stmt = IDENTIFIER
+    ;
+    
+prepareStatement : 
+    PREPARE IDENTIFIER FROM inputParameter
+    ;
+    
+closeStatement :
+    CLOSE IDENTIFIER
+    ;
+    
+declareTempTableStatement :
 	DECLARE GLOBAL TEMPORARY TABLE table
 	( LIKE table 
 	| tableDefinition
