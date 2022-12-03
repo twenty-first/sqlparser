@@ -45,6 +45,13 @@ public class ParserUnitTests extends TestBase {
     }
 
     @Test
+    public void testDeclareCursor() throws ParseException
+    {
+        helper.parse("declare cursor c for s");
+        helper.parse("declare c cursor for s");
+    }
+
+    @Test
     public void testDeclareGlobalTemporary() throws ParseException
     {
         helper.parse("declare global temporary table session.t2 like t1");
