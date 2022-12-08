@@ -19,8 +19,6 @@ import it.twenfir.sqlparser.SqlParser.IntoClauseContext;
 import it.twenfir.sqlparser.SqlParser.LocalTableDefinitionContext;
 import it.twenfir.sqlparser.SqlParser.OpenStatementContext;
 import it.twenfir.sqlparser.SqlParser.OptionClauseContext;
-import it.twenfir.sqlparser.SqlParser.OptionNameContext;
-import it.twenfir.sqlparser.SqlParser.OptionValueContext;
 import it.twenfir.sqlparser.SqlParser.OutputParameterContext;
 import it.twenfir.sqlparser.SqlParser.PrepareStatementContext;
 import it.twenfir.sqlparser.SqlParser.SelectColumnContext;
