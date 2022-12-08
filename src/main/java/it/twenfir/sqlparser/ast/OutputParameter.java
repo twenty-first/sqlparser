@@ -1,17 +1,12 @@
 package it.twenfir.sqlparser.ast;
 
-import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class OutputParameter extends AstNode {
+public class OutputParameter extends Parameter {
 
-	public OutputParameter(Location location) {
-		super(location);
-	}
-
-	public Parameter getParameter() {
-		return getChild(Parameter.class);
+	public OutputParameter(Location location, String name, Integer index) {
+		super(location, name, index);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
