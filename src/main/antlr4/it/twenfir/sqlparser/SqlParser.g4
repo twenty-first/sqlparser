@@ -6,26 +6,25 @@ options
 }
 
 statement :
-    ( selectStatement
-    | insertStatement
-    | updateStatement
-    | deleteStatement
-    | setStatement
-    | valuesStatement
-    | fetchStatement
-    | openStatement
-    | executeStatement
-    | declareCursorStatement
-    | prepareStatement
-    | openStatement
+    ( alterTableStatement
+//    | callStatement
     | closeStatement
-    | declareTempTableStatement
+    | commitStatement
     | createIndexStatement
     | createTableStatement
-    | alterTableStatement
-    | commitStatement
-//    | callStatement
+    | declareCursorStatement
+    | declareTempTableStatement
+    | deleteStatement
+    | executeStatement
+    | fetchStatement
+    | insertStatement
+    | openStatement
+    | prepareStatement
+    | selectStatement
+    | setStatement
     | setOptionStatement
+    | updateStatement
+    | valuesStatement
     | catchAll
     )
     ;

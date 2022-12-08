@@ -23,8 +23,8 @@ public class AstUnitTests extends TestBase {
 	@Test
 	public void selectCountTest() {
 		String s = "select count(*) into :c :b from t where p=:a and f='V' and o in ('P','A')";
-		Statement statement = helper.ast(s);
-		SimpleSelect simpleSelect = statement.getSelectStatements().next().getSelectExpression().getSimpleSelects().next();
+		SelectStatement statement = (SelectStatement)helper.ast(s);
+		SimpleSelect simpleSelect = statement.getSelectExpression().getSimpleSelects().next();
 		CombinedOutputParameter cop = simpleSelect.getIntoClause().getCombinedOutputParameters().next();
 		assertEquals("c", cop.getOutputParameter().getParameter().getName());
 		assertEquals("b", cop.getIndicator().getParameter().getName());
@@ -38,8 +38,8 @@ public class AstUnitTests extends TestBase {
     @Test
     public void testDb2SetOptions() throws ParseException
     {
-    	Statement statement = helper.ast("set option naming=*sys, commit=*none");
-    	OptionClause oc = statement.getSetOptionStatements().next().getOptionClauses().next();
+    	SetOptionStatement statement = (SetOptionStatement)helper.ast("set option naming=*sys, commit=*none");
+    	OptionClause oc = statement.getOptionClauses().next();
     	assertEquals("naming", oc.getOptionName().getName());
     	assertEquals("*sys", oc.getOptionValue().getValue());
     }
@@ -55,11 +55,11 @@ public class AstUnitTests extends TestBase {
     
     @Test
     public void testLocate() {
-    	Statement statement = helper.ast(
+    	SelectStatement statement = (SelectStatement)helper.ast(
     			"with t as ( select a, b, locate('&h=', upper(b)) as s, locate('&', upper(b), locate('&h=', upper(b))+1 ) as f from u " +
     			"where locate('&h=', upper(b)) > 0) select c into :o from t join v on a = d and e = :p and upper(substr(b, s+6, " +
 				"(case when f > 0 then f else (s+16) end)-(s+6))) = upper(:h) and c = 's' fetch first rows only");
-    	SimpleSelect ss = statement.getSelectStatements().next().getLocalTableDefinitions().next().getSelectExpression().getSimpleSelects().next();
+    	SimpleSelect ss = statement.getLocalTableDefinitions().next().getSelectExpression().getSimpleSelects().next();
     	Iterator<SelectColumn> scIter = ss.getSelectColumns();
     	scIter.next();
     	scIter.next();

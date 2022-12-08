@@ -1,10 +1,9 @@
 package it.twenfir.sqlparser.ast;
 
-import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class OpenStatement extends AstNode {
+public class OpenStatement extends Statement {
 
 	private String name;
 

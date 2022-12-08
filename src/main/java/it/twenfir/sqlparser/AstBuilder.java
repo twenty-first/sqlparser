@@ -296,11 +296,17 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		return node;
 	}
 
+//	@Override
+//	public Statement visitStatement(StatementContext ctx) {
+//		Location location = AstHelper.location(ctx);
+//		Statement node = new Statement(location);
+//		AstHelper.visitChildren(this, ctx, node);
+//		return node;
+//	}
+
 	@Override
 	public Statement visitStatement(StatementContext ctx) {
-		Location location = AstHelper.location(ctx);
-		Statement node = new Statement(location);
-		AstHelper.visitChildren(this, ctx, node);
+		Statement node = (Statement)AstHelper.visitChild(this, ctx);
 		return node;
 	}
 

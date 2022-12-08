@@ -1,10 +1,9 @@
 package it.twenfir.sqlparser.ast;
 
-import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class CloseStatement extends AstNode {
+public class CloseStatement extends Statement {
 
 	private String name;
 

@@ -34,7 +34,7 @@ public class VisitorUnitTests extends TestBase {
 
         IntoClause ic1 = new IntoClause(null);
         IntoClause ic2 = new IntoClause(null);
-        Statement s = new Statement(null);
+        Statement s = new SelectStatement(null);
         s.addChild(ic1);
         s.addChild(ic2);
         int i = visitor.visit(s);
