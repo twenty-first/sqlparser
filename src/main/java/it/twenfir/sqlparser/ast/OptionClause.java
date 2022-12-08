@@ -6,16 +6,21 @@ import it.twenfir.antlr.ast.Location;
 
 public class OptionClause extends AstNode {
 
-	public OptionClause(Location location) {
+	private String name;
+	private String value;
+
+	public OptionClause(Location location, String name, String value) {
 		super(location);
+		this.name = name;
+		this.value = value;
 	}
 	
-	public OptionName getOptionName() {
-		return getChild(OptionName.class);
+	public String getName() {
+		return name;
 	}
-	
-	public OptionValue getOptionValue() {
-		return getChild(OptionValue.class);
+
+	public String getValue() {
+		return value;
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

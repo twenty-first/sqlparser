@@ -40,8 +40,8 @@ public class AstUnitTests extends TestBase {
     {
     	SetOptionStatement statement = (SetOptionStatement)helper.ast("set option naming=*sys, commit=*none");
     	OptionClause oc = statement.getOptionClauses().next();
-    	assertEquals("naming", oc.getOptionName().getName());
-    	assertEquals("*sys", oc.getOptionValue().getValue());
+    	assertEquals("naming", oc.getName());
+    	assertEquals("*sys", oc.getValue());
     }
 
     private void checkLocate(FunctionCall fc, int argc) {

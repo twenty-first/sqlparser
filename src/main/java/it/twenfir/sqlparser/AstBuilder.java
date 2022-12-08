@@ -48,8 +48,6 @@ import it.twenfir.sqlparser.ast.IntoClause;
 import it.twenfir.sqlparser.ast.LocalTableDefinition;
 import it.twenfir.sqlparser.ast.OpenStatement;
 import it.twenfir.sqlparser.ast.OptionClause;
-import it.twenfir.sqlparser.ast.OptionName;
-import it.twenfir.sqlparser.ast.OptionValue;
 import it.twenfir.sqlparser.ast.OutputParameter;
 import it.twenfir.sqlparser.ast.PrepareStatement;
 import it.twenfir.sqlparser.ast.SelectColumn;
@@ -198,34 +196,18 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public OptionClause visitOptionClause(OptionClauseContext ctx) {
 		Location location = AstHelper.location(ctx);
-		OptionClause node = new OptionClause(location);
-		AstHelper.visitChildren(this, ctx, node);
-		return node;
-	}
-
-	@Override
-	public OptionName visitOptionName(OptionNameContext ctx) {
-		Location location = AstHelper.location(ctx);
 		String name = null;
-		if ( ctx.IDENTIFIER() != null ) {
-			name = ctx.IDENTIFIER().getText();
+		if ( ctx.optionName().IDENTIFIER() != null ) {
+			name = ctx.optionName().IDENTIFIER().getText();
 		}
-		else if ( ctx.COMMIT() != null ) {
-			name = ctx.COMMIT().getText();
+		else if ( ctx.optionName().COMMIT() != null ) {
+			name = ctx.optionName().COMMIT().getText();
 		}
-		OptionName node = new OptionName(location, name);
-		AstHelper.visitChildren(this, ctx, node);
-		return node;
-	}
-
-	@Override
-	public OptionValue visitOptionValue(OptionValueContext ctx) {
-		Location location = AstHelper.location(ctx);
 		String value = null;
-		if ( ctx.DB2_CONSTANT() != null ) {
-			value = ctx.DB2_CONSTANT().getText();
+		if ( ctx.optionValue().DB2_CONSTANT() != null ) {
+			value = ctx.optionValue().DB2_CONSTANT().getText();
 		}
-		OptionValue node = new OptionValue(location, value);
+		OptionClause node = new OptionClause(location, name, value);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

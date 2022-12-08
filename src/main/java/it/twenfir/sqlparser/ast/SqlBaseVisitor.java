@@ -85,16 +85,6 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
-    public ValueT visitOptionName(OptionName node) {
-        return visitChildren(node);
-    }
-
-    @Override
-    public ValueT visitOptionValue(OptionValue node) {
-        return visitChildren(node);
-    }
-
-    @Override
     public ValueT visitOutputParameter(OutputParameter node) {
         return visitChildren(node);
     }
