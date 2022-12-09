@@ -1,10 +1,9 @@
 package it.twenfir.sqlparser.ast;
 
-import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class CombinedInputParameter extends AstNode {
+public class CombinedInputParameter extends CompositeInputParameter {
 
 	public CombinedInputParameter(Location location) {
 		super(location);

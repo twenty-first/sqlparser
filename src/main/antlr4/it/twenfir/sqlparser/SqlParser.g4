@@ -100,7 +100,7 @@ intoClause :
     ;
 
 executeStatement :
-    EXECUTE IMMEDIATE? ( IDENTIFIER | inputParameter ) usingClause?
+    EXECUTE IMMEDIATE? ( IDENTIFIER | simpleInputParameter ) usingClause?
     ;
         
 openStatement :
@@ -119,7 +119,7 @@ declareCursorStatement :
     ;
     
 prepareStatement : 
-    PREPARE IDENTIFIER FROM inputParameter
+    PREPARE IDENTIFIER FROM simpleInputParameter
     ;
     
 closeStatement :
