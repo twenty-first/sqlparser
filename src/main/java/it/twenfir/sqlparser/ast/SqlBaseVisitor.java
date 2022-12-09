@@ -55,16 +55,6 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
-    public ValueT visitIndicator(Indicator node) {
-        return visitChildren(node);
-    }
-
-    @Override
-    public ValueT visitInputParameter(InputParameter node) {
-        return visitChildren(node);
-    }
-
-    @Override
     public ValueT visitIntoClause(IntoClause node) {
         return visitChildren(node);
     }
@@ -81,11 +71,6 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
 
     @Override
     public ValueT visitOptionClause(OptionClause node) {
-        return visitChildren(node);
-    }
-
-    @Override
-    public ValueT visitOutputParameter(OutputParameter node) {
         return visitChildren(node);
     }
 

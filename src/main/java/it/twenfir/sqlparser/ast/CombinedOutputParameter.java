@@ -3,18 +3,23 @@ package it.twenfir.sqlparser.ast;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class CombinedOutputParameter extends CompositeOutputParameter {
+public class CombinedOutputParameter extends OutputParameter {
 
-	public CombinedOutputParameter(Location location) {
+	private Parameter parameter;
+	private Parameter indicator;
+
+	public CombinedOutputParameter(Location location, Parameter parameter, Parameter indicator) {
 		super(location);
+		this.parameter = parameter;
+		this.indicator = indicator;
 	}
 
-	public OutputParameter getOutputParameter() {
-		return getChild(OutputParameter.class);
+	public Parameter getParameter() {
+		return parameter;
 	}
 
-	public Indicator getIndicator() {
-		return getChild(Indicator.class);
+	public Parameter getIndicator() {
+		return indicator;
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

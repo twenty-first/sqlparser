@@ -26,12 +26,12 @@ public class AstUnitTests extends TestBase {
 		SelectStatement statement = (SelectStatement)helper.ast(s);
 		SimpleSelect simpleSelect = statement.getSelectExpression().getSimpleSelects().next();
 		CombinedOutputParameter cop = simpleSelect.getIntoClause().getCombinedOutputParameters().next();
-		assertEquals("c", cop.getOutputParameter().getName());
+		assertEquals("c", cop.getParameter().getName());
 		assertEquals("b", cop.getIndicator().getName());
 		Expression expression = simpleSelect.getWhereClause().getExpression();
 		Iterator<Term> termIter = expression.getTerms();
 		termIter.next();
-		assertEquals("a", termIter.next().getFactor().getCombinedInputParameter().getInputParameter().getName());
+		assertEquals("a", termIter.next().getFactor().getCombinedInputParameter().getParameter().getName());
 	}
 	
 
