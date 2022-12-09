@@ -3,6 +3,7 @@ package it.twenfir.sqlparser;
 import it.twenfir.antlr.ast.AstHelper;
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.Location;
+import it.twenfir.antlr.exception.AstException;
 import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
 import it.twenfir.sqlparser.SqlParser.CombinedInputParameterContext;
 import it.twenfir.sqlparser.SqlParser.CombinedOutputParameterContext;
@@ -163,22 +164,12 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 
 	@Override
 	public Parameter visitIndicator(IndicatorContext ctx) {
-//		Location location = AstHelper.location(ctx);
-//		String name = ctx.parameter().IDENTIFIER().getText();
-//		Integer index = ctx.parameter().INTEGER() != null ? Integer.decode(ctx.parameter().INTEGER().getText()) : null;
-//		Indicator node = new Indicator(location, name, index);
-//		AstHelper.visitChildren(this, ctx, node);
 		Parameter node = (Parameter)AstHelper.visitChild(this, ctx);
 		return node;
 }
 
 	@Override
 	public Parameter visitInputParameter(InputParameterContext ctx) {
-//		Location location = AstHelper.location(ctx);
-//		String name = ctx.parameter().IDENTIFIER().getText();
-//		Integer index = ctx.parameter().INTEGER() != null ? Integer.decode(ctx.parameter().INTEGER().getText()) : null;
-//		InputParameter node = new InputParameter(location, name, index);
-//		AstHelper.visitChildren(this, ctx, node);
 		Parameter node = (Parameter)AstHelper.visitChild(this, ctx);
 		return node;
 	}
@@ -229,11 +220,6 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 
 	@Override
 	public Parameter visitOutputParameter(OutputParameterContext ctx) {
-//		Location location = AstHelper.location(ctx);
-//		String name = ctx.parameter().IDENTIFIER().getText();
-//		Integer index = ctx.parameter().INTEGER() != null ? Integer.decode(ctx.parameter().INTEGER().getText()) : null;
-//		OutputParameter node = new OutputParameter(location, name, index);
-//		AstHelper.visitChildren(this, ctx, node);
 		Parameter node = (Parameter)AstHelper.visitChild(this, ctx);
 		return node;
 	}
@@ -243,9 +229,8 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		Location location = AstHelper.location(ctx);
 		String name = ctx.IDENTIFIER().getText();
 		Integer index = ctx.INTEGER() != null ? Integer.decode(ctx.INTEGER().getText()) : null;
-//		OutputParameter node = new OutputParameter(location, name, index);
-//		AstHelper.visitChildren(this, ctx, node);
 		Parameter node = new Parameter(location, name, index);
+//		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
 
@@ -299,18 +284,13 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		return node;
 	}
 
-//	@Override
-//	public Statement visitStatement(StatementContext ctx) {
-//		Location location = AstHelper.location(ctx);
-//		Statement node = new Statement(location);
-//		AstHelper.visitChildren(this, ctx, node);
-//		return node;
-//	}
-
 	@Override
 	public Statement visitStatement(StatementContext ctx) {
-		Statement node = (Statement)AstHelper.visitChild(this, ctx);
-		return node;
+		AstNode node = AstHelper.visitChild(this, ctx);
+		if ( ! ( node instanceof Statement ) ) {
+			throw new AstException("Statement type not supported: " + ctx.getChild(0));
+		}
+		return (Statement)node;
 	}
 
 	@Override
