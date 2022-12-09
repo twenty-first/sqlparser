@@ -27,6 +27,7 @@ import it.twenfir.sqlparser.SqlParser.SelectColumnContext;
 import it.twenfir.sqlparser.SqlParser.SelectExpressionContext;
 import it.twenfir.sqlparser.SqlParser.SelectStatementContext;
 import it.twenfir.sqlparser.SqlParser.SetOptionStatementContext;
+import it.twenfir.sqlparser.SqlParser.SetStatementContext;
 import it.twenfir.sqlparser.SqlParser.SimpleSelectContext;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.SqlParser.TermContext;
@@ -52,6 +53,7 @@ import it.twenfir.sqlparser.ast.SelectColumn;
 import it.twenfir.sqlparser.ast.SelectExpression;
 import it.twenfir.sqlparser.ast.SelectStatement;
 import it.twenfir.sqlparser.ast.SetOptionStatement;
+import it.twenfir.sqlparser.ast.SetStatement;
 import it.twenfir.sqlparser.ast.SimpleSelect;
 import it.twenfir.sqlparser.ast.Statement;
 import it.twenfir.sqlparser.ast.Term;
@@ -264,6 +266,18 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public SelectStatement visitSelectStatement(SelectStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
 		SelectStatement node = new SelectStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public SetStatement visitSetStatement(SetStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = null;
+		if ( ctx.IDENTIFIER() != null ) {
+			name = ctx.IDENTIFIER().getText();
+		}
+		SetStatement node = new SetStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

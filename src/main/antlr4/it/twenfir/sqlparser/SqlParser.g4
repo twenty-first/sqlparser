@@ -84,7 +84,7 @@ deleteStatement :
     ;
 
 setStatement :
-    SET combinedOutputParameter EQUALS expression
+    SET ( IDENTIFIER | combinedOutputParameter ) EQUALS expression
     ;
 
 valuesStatement :

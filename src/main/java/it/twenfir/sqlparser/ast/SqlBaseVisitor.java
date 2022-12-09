@@ -100,6 +100,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitSetStatement(SetStatement node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitSetOptionStatement(SetOptionStatement node) {
         return visitChildren(node);
     }
