@@ -110,6 +110,16 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitSimpleInputParameter(SimpleInputParameter node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visitSimpleOutputParameter(SimpleOutputParameter node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitSimpleSelect(SimpleSelect node) {
         return visitChildren(node);
     }

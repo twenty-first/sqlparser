@@ -9,4 +9,6 @@ public abstract class OutputParameter extends AstNode {
         super(location);
     }
     
+    public abstract Parameter getParameter();
+
 }

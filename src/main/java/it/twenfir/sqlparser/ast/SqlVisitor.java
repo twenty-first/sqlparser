@@ -24,6 +24,8 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitSelectStatement(SelectStatement node);
     ValueT visitSetStatement(SetStatement node);
     ValueT visitSetOptionStatement(SetOptionStatement node);
+    ValueT visitSimpleInputParameter(SimpleInputParameter node);
+    ValueT visitSimpleOutputParameter(SimpleOutputParameter node);
     ValueT visitSimpleSelect(SimpleSelect node);
     ValueT visitStatement(Statement node);
     ValueT visitTerm(Term node);

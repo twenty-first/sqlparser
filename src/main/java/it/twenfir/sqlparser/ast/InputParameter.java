@@ -9,4 +9,5 @@ public abstract class InputParameter extends AstNode {
         super(location);
     }
     
+    public abstract Parameter getParameter();
 }

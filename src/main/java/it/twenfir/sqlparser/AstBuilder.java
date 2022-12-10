@@ -28,6 +28,8 @@ import it.twenfir.sqlparser.SqlParser.SelectExpressionContext;
 import it.twenfir.sqlparser.SqlParser.SelectStatementContext;
 import it.twenfir.sqlparser.SqlParser.SetOptionStatementContext;
 import it.twenfir.sqlparser.SqlParser.SetStatementContext;
+import it.twenfir.sqlparser.SqlParser.SimpleInputParameterContext;
+import it.twenfir.sqlparser.SqlParser.SimpleOutputParameterContext;
 import it.twenfir.sqlparser.SqlParser.SimpleSelectContext;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.SqlParser.TermContext;
@@ -54,6 +56,8 @@ import it.twenfir.sqlparser.ast.SelectExpression;
 import it.twenfir.sqlparser.ast.SelectStatement;
 import it.twenfir.sqlparser.ast.SetOptionStatement;
 import it.twenfir.sqlparser.ast.SetStatement;
+import it.twenfir.sqlparser.ast.SimpleInputParameter;
+import it.twenfir.sqlparser.ast.SimpleOutputParameter;
 import it.twenfir.sqlparser.ast.SimpleSelect;
 import it.twenfir.sqlparser.ast.Statement;
 import it.twenfir.sqlparser.ast.Term;
@@ -83,7 +87,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 			indicator = (Parameter)AstHelper.visitChild(this, ctx.indicator());
 		}
 		CombinedInputParameter node = new CombinedInputParameter(location, parameter, indicator);
-//		AstHelper.visitChildren(this, ctx, node);
+		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
 
@@ -99,7 +103,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 			indicator = (Parameter)AstHelper.visitChild(this, ctx.indicator());
 		}
 		CombinedOutputParameter node = new CombinedOutputParameter(location, parameter, indicator);
-//		AstHelper.visitChildren(this, ctx, node);
+		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
 
@@ -232,7 +236,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		String name = ctx.IDENTIFIER().getText();
 		Integer index = ctx.INTEGER() != null ? Integer.decode(ctx.INTEGER().getText()) : null;
 		Parameter node = new Parameter(location, name, index);
-//		AstHelper.visitChildren(this, ctx, node);
+		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
 
@@ -286,6 +290,22 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public SetOptionStatement visitSetOptionStatement(SetOptionStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
 		SetOptionStatement node = new SetOptionStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public SimpleInputParameter visitSimpleInputParameter(SimpleInputParameterContext ctx) {
+		Location location = AstHelper.location(ctx);
+		SimpleInputParameter node = new SimpleInputParameter(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public SimpleOutputParameter visitSimpleOutputParameter(SimpleOutputParameterContext ctx) {
+		Location location = AstHelper.location(ctx);
+		SimpleOutputParameter node = new SimpleOutputParameter(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
