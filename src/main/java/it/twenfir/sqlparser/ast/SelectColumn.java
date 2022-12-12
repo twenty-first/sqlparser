@@ -1,5 +1,7 @@
 package it.twenfir.sqlparser.ast;
 
+import java.util.Iterator;
+
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
@@ -19,6 +21,10 @@ public class SelectColumn extends AstNode {
 	
 	public Expression getExpression() {
 		return getChild(Expression.class);
+	}
+	
+	public Iterator<FunctionCall> getFunctionCalls() {
+		return getDescendants(FunctionCall.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

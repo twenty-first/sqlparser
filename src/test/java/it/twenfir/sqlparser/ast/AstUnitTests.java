@@ -82,10 +82,12 @@ public class AstUnitTests extends TestBase {
     			"where locate('&h=', upper(b)) > 0) select c into :o from t join v on a = d and e = :p and upper(substr(b, s+6, " +
 				"(case when f > 0 then f else (s+16) end)-(s+6))) = upper(:h) and c = 's' fetch first rows only");
     	SimpleSelect ss = statement.getSelectExpression().getSimpleSelects().next();
-		Iterator<FunctionCall> cols = ss.getFunctionCalls();
+		Iterator<SelectColumn> sc = ss.getSelectColumns();
+		Iterator<FunctionCall> cols = sc.next().getFunctionCalls();
 		assertTrue(cols.hasNext());
 		FunctionCall c = cols.next();
 		assertEquals("c", c.getName());
 		assertNull(c.getExprList());
+		assertFalse(cols.hasNext());
 	}
 }
