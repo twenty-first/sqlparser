@@ -2,6 +2,8 @@ package it.twenfir.sqlparser.ast;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
@@ -72,4 +74,18 @@ public class AstUnitTests extends TestBase {
     	checkLocate(expIter.next().getTerms().next().getFunctionCall(), 2);
     	checkLocate(ss.getWhereClause().getExpression().getTerms().next().getFunctionCall(), 2);
     }
+
+	@Test
+	public void testColumnName() {
+    	SelectStatement statement = (SelectStatement)helper.ast(
+    			"with t as ( select a, b, locate('&h=', upper(b)) as s, locate('&', upper(b), locate('&h=', upper(b))+1 ) as f from u " +
+    			"where locate('&h=', upper(b)) > 0) select c into :o from t join v on a = d and e = :p and upper(substr(b, s+6, " +
+				"(case when f > 0 then f else (s+16) end)-(s+6))) = upper(:h) and c = 's' fetch first rows only");
+    	SimpleSelect ss = statement.getSelectExpression().getSimpleSelects().next();
+		Iterator<FunctionCall> cols = ss.getFunctionCalls();
+		assertTrue(cols.hasNext());
+		FunctionCall c = cols.next();
+		assertEquals("c", c.getName());
+		assertNull(c.getExprList());
+	}
 }

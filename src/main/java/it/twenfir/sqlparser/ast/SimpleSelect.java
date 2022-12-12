@@ -24,6 +24,10 @@ public class SimpleSelect extends AstNode {
 		return getChild(WhereClause.class);
 	}
 	
+	public Iterator<FunctionCall> getFunctionCalls() {
+		return getDescendants(FunctionCall.class);
+	}
+	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
 		if ( visitor instanceof SqlVisitor ) {
 			return ((SqlVisitor<? extends ValueT>) visitor).visitSimpleSelect(this);
