@@ -7,8 +7,13 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitCloseStatement(CloseStatement node);
     ValueT visitCombinedInputParameter(CombinedInputParameter node);
     ValueT visitCombinedOutputParameter(CombinedOutputParameter node);
+    ValueT visitCommitStatement(CommitStatement node);
+    ValueT visitCreateIndexStatement(CreateIndexStatement node);
     ValueT visitCreateTableStatement(CreateTableStatement node);
     ValueT visitDeclareCursorStatement(DeclareCursorStatement node);
+    ValueT visitDeclareTempTableStatement(DeclareTempTableStatement node);
+    ValueT visitDeleteStatement(DeleteStatement node);
+    ValueT visitExecuteStatement(ExecuteStatement node);
     ValueT visitExpression(Expression node);
     ValueT visitExprList(ExprList node);
     ValueT visitFactor(Factor node);
@@ -36,5 +41,6 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitTerm(Term node);
     ValueT visitUpdateStatement(UpdateStatement node);
     ValueT visitUsingClause(UsingClause node);
+    ValueT visitValuesStatement(ValuesStatement node);
     ValueT visitWhereClause(WhereClause node);
 }

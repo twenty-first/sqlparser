@@ -8,8 +8,13 @@ import it.twenfir.sqlparser.SqlParser.AlterTableStatementContext;
 import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
 import it.twenfir.sqlparser.SqlParser.CombinedInputParameterContext;
 import it.twenfir.sqlparser.SqlParser.CombinedOutputParameterContext;
+import it.twenfir.sqlparser.SqlParser.CommitStatementContext;
+import it.twenfir.sqlparser.SqlParser.CreateIndexStatementContext;
 import it.twenfir.sqlparser.SqlParser.CreateTableStatementContext;
 import it.twenfir.sqlparser.SqlParser.DeclareCursorStatementContext;
+import it.twenfir.sqlparser.SqlParser.DeclareTempTableStatementContext;
+import it.twenfir.sqlparser.SqlParser.DeleteStatementContext;
+import it.twenfir.sqlparser.SqlParser.ExecuteStatementContext;
 import it.twenfir.sqlparser.SqlParser.ExprListContext;
 import it.twenfir.sqlparser.SqlParser.ExpressionContext;
 import it.twenfir.sqlparser.SqlParser.FactorContext;
@@ -38,13 +43,19 @@ import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.SqlParser.TermContext;
 import it.twenfir.sqlparser.SqlParser.UpdateStatementContext;
 import it.twenfir.sqlparser.SqlParser.UsingClauseContext;
+import it.twenfir.sqlparser.SqlParser.ValuesStatementContext;
 import it.twenfir.sqlparser.SqlParser.WhereClauseContext;
 import it.twenfir.sqlparser.ast.AlterTableStatement;
 import it.twenfir.sqlparser.ast.CloseStatement;
 import it.twenfir.sqlparser.ast.CombinedInputParameter;
 import it.twenfir.sqlparser.ast.CombinedOutputParameter;
+import it.twenfir.sqlparser.ast.CommitStatement;
+import it.twenfir.sqlparser.ast.CreateIndexStatement;
 import it.twenfir.sqlparser.ast.CreateTableStatement;
 import it.twenfir.sqlparser.ast.DeclareCursorStatement;
+import it.twenfir.sqlparser.ast.DeclareTempTableStatement;
+import it.twenfir.sqlparser.ast.DeleteStatement;
+import it.twenfir.sqlparser.ast.ExecuteStatement;
 import it.twenfir.sqlparser.ast.ExprList;
 import it.twenfir.sqlparser.ast.Expression;
 import it.twenfir.sqlparser.ast.Factor;
@@ -70,6 +81,7 @@ import it.twenfir.sqlparser.ast.Statement;
 import it.twenfir.sqlparser.ast.Term;
 import it.twenfir.sqlparser.ast.UpdateStatement;
 import it.twenfir.sqlparser.ast.UsingClause;
+import it.twenfir.sqlparser.ast.ValuesStatement;
 import it.twenfir.sqlparser.ast.WhereClause;
 
 public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
@@ -124,6 +136,22 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	}
 
 	@Override
+	public CommitStatement visitCommitStatement(CommitStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		CommitStatement node = new CommitStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public CreateIndexStatement visitCreateIndexStatement(CreateIndexStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		CreateIndexStatement node = new CreateIndexStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
 	public CreateTableStatement visitCreateTableStatement(CreateTableStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
 		CreateTableStatement node = new CreateTableStatement(location);
@@ -137,6 +165,30 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		String name = ctx.name.getText();
 		String stmt = ctx.stmt.getText();
 		DeclareCursorStatement node = new DeclareCursorStatement(location, name, stmt);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public DeclareTempTableStatement visitDeclareTempTableStatement(DeclareTempTableStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		DeclareTempTableStatement node = new DeclareTempTableStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public DeleteStatement visitDeleteStatement(DeleteStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		DeleteStatement node = new DeleteStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public ExecuteStatement visitExecuteStatement(ExecuteStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		ExecuteStatement node = new ExecuteStatement(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
@@ -307,6 +359,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	}
 
 	@Override
+	public SetOptionStatement visitSetOptionStatement(SetOptionStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		SetOptionStatement node = new SetOptionStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
 	public SetStatement visitSetStatement(SetStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
 		String name = null;
@@ -314,14 +374,6 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 			name = ctx.IDENTIFIER().getText();
 		}
 		SetStatement node = new SetStatement(location, name);
-		AstHelper.visitChildren(this, ctx, node);
-		return node;
-	}
-
-	@Override
-	public SetOptionStatement visitSetOptionStatement(SetOptionStatementContext ctx) {
-		Location location = AstHelper.location(ctx);
-		SetOptionStatement node = new SetOptionStatement(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
@@ -379,6 +431,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public UsingClause visitUsingClause(UsingClauseContext ctx) {
 		Location location = AstHelper.location(ctx);
 		UsingClause node = new UsingClause(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public ValuesStatement visitValuesStatement(ValuesStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		ValuesStatement node = new ValuesStatement(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
