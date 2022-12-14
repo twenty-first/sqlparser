@@ -16,7 +16,7 @@ public class FetchStatement extends Statement {
 		return name;
 	}
 	
-	public IntoClause getIntoClose() {
+	public IntoClause getIntoClause() {
 		return getChild(IntoClause.class);
 	}
 	
