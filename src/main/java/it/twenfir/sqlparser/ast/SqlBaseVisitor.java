@@ -5,6 +5,11 @@ import it.twenfir.antlr.ast.BaseAstVisitor;
 public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> implements SqlVisitor<ValueT> {
 
     @Override
+	public ValueT visitAlterTableStatement(AlterTableStatement node) {
+        return visitChildren(node);
+	}
+
+	@Override
     public ValueT visitCloseStatement(CloseStatement node) {
         return visitChildren(node);
     }
