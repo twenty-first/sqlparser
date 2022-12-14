@@ -7,6 +7,7 @@ import it.twenfir.antlr.exception.AstException;
 import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
 import it.twenfir.sqlparser.SqlParser.CombinedInputParameterContext;
 import it.twenfir.sqlparser.SqlParser.CombinedOutputParameterContext;
+import it.twenfir.sqlparser.SqlParser.CreateTableStatementContext;
 import it.twenfir.sqlparser.SqlParser.DeclareCursorStatementContext;
 import it.twenfir.sqlparser.SqlParser.ExprListContext;
 import it.twenfir.sqlparser.SqlParser.ExpressionContext;
@@ -38,6 +39,7 @@ import it.twenfir.sqlparser.SqlParser.WhereClauseContext;
 import it.twenfir.sqlparser.ast.CloseStatement;
 import it.twenfir.sqlparser.ast.CombinedInputParameter;
 import it.twenfir.sqlparser.ast.CombinedOutputParameter;
+import it.twenfir.sqlparser.ast.CreateTableStatement;
 import it.twenfir.sqlparser.ast.DeclareCursorStatement;
 import it.twenfir.sqlparser.ast.ExprList;
 import it.twenfir.sqlparser.ast.Expression;
@@ -103,6 +105,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 			indicator = (Parameter)AstHelper.visitChild(this, ctx.indicator());
 		}
 		CombinedOutputParameter node = new CombinedOutputParameter(location, parameter, indicator);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public CreateTableStatement visitCreateTableStatement(CreateTableStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		CreateTableStatement node = new CreateTableStatement(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

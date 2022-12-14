@@ -20,6 +20,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitCreateTableStatement(CreateTableStatement node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitDeclareCursorStatement(DeclareCursorStatement node) {
         return visitChildren(node);
     }
@@ -55,6 +60,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitInputParameter(InputParameter node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitIntoClause(IntoClause node) {
         return visitChildren(node);
     }
@@ -71,6 +81,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
 
     @Override
     public ValueT visitOptionClause(OptionClause node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visitOutputParameter(OutputParameter node) {
         return visitChildren(node);
     }
 
@@ -100,12 +115,12 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
-    public ValueT visitSetStatement(SetStatement node) {
+    public ValueT visitSetOptionStatement(SetOptionStatement node) {
         return visitChildren(node);
     }
 
     @Override
-    public ValueT visitSetOptionStatement(SetOptionStatement node) {
+    public ValueT visitSetStatement(SetStatement node) {
         return visitChildren(node);
     }
 
