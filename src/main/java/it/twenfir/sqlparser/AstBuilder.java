@@ -18,6 +18,7 @@ import it.twenfir.sqlparser.SqlParser.FunctionCallContext;
 import it.twenfir.sqlparser.SqlParser.FunctionContext;
 import it.twenfir.sqlparser.SqlParser.IndicatorContext;
 import it.twenfir.sqlparser.SqlParser.InputParameterContext;
+import it.twenfir.sqlparser.SqlParser.InsertStatementContext;
 import it.twenfir.sqlparser.SqlParser.IntoClauseContext;
 import it.twenfir.sqlparser.SqlParser.LocalTableDefinitionContext;
 import it.twenfir.sqlparser.SqlParser.OpenStatementContext;
@@ -35,6 +36,7 @@ import it.twenfir.sqlparser.SqlParser.SimpleOutputParameterContext;
 import it.twenfir.sqlparser.SqlParser.SimpleSelectContext;
 import it.twenfir.sqlparser.SqlParser.StatementContext;
 import it.twenfir.sqlparser.SqlParser.TermContext;
+import it.twenfir.sqlparser.SqlParser.UpdateStatementContext;
 import it.twenfir.sqlparser.SqlParser.UsingClauseContext;
 import it.twenfir.sqlparser.SqlParser.WhereClauseContext;
 import it.twenfir.sqlparser.ast.AlterTableStatement;
@@ -49,6 +51,7 @@ import it.twenfir.sqlparser.ast.Factor;
 import it.twenfir.sqlparser.ast.FetchStatement;
 import it.twenfir.sqlparser.ast.Function;
 import it.twenfir.sqlparser.ast.FunctionCall;
+import it.twenfir.sqlparser.ast.InsertStatement;
 import it.twenfir.sqlparser.ast.IntoClause;
 import it.twenfir.sqlparser.ast.LocalTableDefinition;
 import it.twenfir.sqlparser.ast.OpenStatement;
@@ -65,6 +68,7 @@ import it.twenfir.sqlparser.ast.SimpleOutputParameter;
 import it.twenfir.sqlparser.ast.SimpleSelect;
 import it.twenfir.sqlparser.ast.Statement;
 import it.twenfir.sqlparser.ast.Term;
+import it.twenfir.sqlparser.ast.UpdateStatement;
 import it.twenfir.sqlparser.ast.UsingClause;
 import it.twenfir.sqlparser.ast.WhereClause;
 
@@ -197,6 +201,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public Parameter visitInputParameter(InputParameterContext ctx) {
 		Parameter node = (Parameter)AstHelper.visitChild(this, ctx);
+		return node;
+	}
+
+	@Override
+	public InsertStatement visitInsertStatement(InsertStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		InsertStatement node = new InsertStatement(location);
+		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
 
@@ -351,6 +363,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public Term visitTerm(TermContext ctx) {
 		Location location = AstHelper.location(ctx);
 		Term node = new Term(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public UpdateStatement visitUpdateStatement(UpdateStatementContext ctx) {
+		Location location = AstHelper.location(ctx);
+		UpdateStatement node = new UpdateStatement(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

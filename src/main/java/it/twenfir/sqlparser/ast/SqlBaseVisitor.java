@@ -70,6 +70,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+	public ValueT visitInsertStatement(InsertStatement node) {
+        return visitChildren(node);
+	}
+
+	@Override
     public ValueT visitIntoClause(IntoClause node) {
         return visitChildren(node);
     }
@@ -153,6 +158,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     public ValueT visitTerm(Term node) {
         return visitChildren(node);
     }
+
+	@Override
+	public ValueT visitUpdateStatement(UpdateStatement node) {
+        return visitChildren(node);
+	}
 
     @Override
     public ValueT visitUsingClause(UsingClause node) {
