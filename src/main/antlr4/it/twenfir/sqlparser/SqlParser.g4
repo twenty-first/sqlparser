@@ -199,10 +199,14 @@ whereClause :
         
 selectColumn : 
     ( NEXTVAL FOR sequence
-    | expression ( AS? IDENTIFIER )?
+    | columnExpression ( AS? IDENTIFIER )?
     )
     ;
-      
+
+columnExpression :
+    IDENTIFIER | expression
+    ;
+
 joinSource :
     tableOrSelect ( ( INNER | ( LEFT | RIGHT ) OUTER? )? JOIN tableOrSelect ON expression )* 
     ;

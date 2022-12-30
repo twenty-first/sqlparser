@@ -6,6 +6,7 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitAlterTableStatement(AlterTableStatement node);
     ValueT visitCloseStatement(CloseStatement node);
     ValueT visitCombinedInputParameter(CombinedInputParameter node);
+    ValueT visitColumnExpression(ColumnExpression node);
     ValueT visitCombinedOutputParameter(CombinedOutputParameter node);
     ValueT visitCommitStatement(CommitStatement node);
     ValueT visitCreateIndexStatement(CreateIndexStatement node);

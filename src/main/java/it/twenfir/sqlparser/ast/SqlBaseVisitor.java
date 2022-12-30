@@ -25,6 +25,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+	public ValueT visitColumnExpression(ColumnExpression node) {
+        return visitChildren(node);
+	}
+
+    @Override
 	public ValueT visitCommitStatement(CommitStatement node) {
         return visitChildren(node);
 	}

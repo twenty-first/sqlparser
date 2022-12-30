@@ -6,6 +6,7 @@ import it.twenfir.antlr.ast.Location;
 import it.twenfir.antlr.exception.AstException;
 import it.twenfir.sqlparser.SqlParser.AlterTableStatementContext;
 import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
+import it.twenfir.sqlparser.SqlParser.ColumnExpressionContext;
 import it.twenfir.sqlparser.SqlParser.CombinedInputParameterContext;
 import it.twenfir.sqlparser.SqlParser.CombinedOutputParameterContext;
 import it.twenfir.sqlparser.SqlParser.CommitStatementContext;
@@ -47,6 +48,7 @@ import it.twenfir.sqlparser.SqlParser.ValuesStatementContext;
 import it.twenfir.sqlparser.SqlParser.WhereClauseContext;
 import it.twenfir.sqlparser.ast.AlterTableStatement;
 import it.twenfir.sqlparser.ast.CloseStatement;
+import it.twenfir.sqlparser.ast.ColumnExpression;
 import it.twenfir.sqlparser.ast.CombinedInputParameter;
 import it.twenfir.sqlparser.ast.CombinedOutputParameter;
 import it.twenfir.sqlparser.ast.CommitStatement;
@@ -131,6 +133,18 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 			indicator = (Parameter)AstHelper.visitChild(this, ctx.indicator());
 		}
 		CombinedOutputParameter node = new CombinedOutputParameter(location, parameter, indicator);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public ColumnExpression visitColumnExpression(ColumnExpressionContext ctx) {
+		Location location = AstHelper.location(ctx);
+		String name = null;
+		if ( ctx.IDENTIFIER() != null ) {
+			name = ctx.IDENTIFIER().getText();
+		}
+		ColumnExpression node = new ColumnExpression(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

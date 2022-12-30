@@ -2,9 +2,7 @@ package it.twenfir.sqlparser.ast;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
@@ -65,8 +63,8 @@ public class AstUnitTests extends TestBase {
     	Iterator<SelectColumn> scIter = ss.getSelectColumns();
     	scIter.next();
     	scIter.next();
-    	checkLocate(scIter.next().getExpression().getTerms().next().getFunctionCall(), 2);
-    	FunctionCall fc = scIter.next().getExpression().getTerms().next().getFunctionCall();
+    	checkLocate(scIter.next().getColumnExpression().getExpression().getTerms().next().getFunctionCall(), 2);
+    	FunctionCall fc = scIter.next().getColumnExpression().getExpression().getTerms().next().getFunctionCall();
     	checkLocate(fc, 3);
     	Iterator<Expression> expIter = fc.getExprList().getExpressions();
     	expIter.next();
@@ -83,11 +81,8 @@ public class AstUnitTests extends TestBase {
 				"(case when f > 0 then f else (s+16) end)-(s+6))) = upper(:h) and c = 's' fetch first rows only");
     	SimpleSelect ss = statement.getSelectExpression().getSimpleSelects().next();
 		Iterator<SelectColumn> sc = ss.getSelectColumns();
-		Iterator<FunctionCall> cols = sc.next().getFunctionCalls();
-		assertTrue(cols.hasNext());
-		FunctionCall c = cols.next();
-		assertEquals("c", c.getName());
-		assertNull(c.getExprList());
-		assertFalse(cols.hasNext());
+		ColumnExpression ce = sc.next().getColumnExpression();
+		assertNotNull(ce);
+		assertEquals("c", ce.getName());
 	}
 }

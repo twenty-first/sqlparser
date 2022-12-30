@@ -19,8 +19,8 @@ public class SelectColumn extends AstNode {
 		return outputName;
 	}
 	
-	public Expression getExpression() {
-		return getChild(Expression.class);
+	public ColumnExpression getColumnExpression() {
+		return getChild(ColumnExpression.class);
 	}
 	
 	public Iterator<FunctionCall> getFunctionCalls() {
