@@ -223,4 +223,19 @@ public class ParserUnitTests extends TestBase {
     {
         helper.parse("select a, b, c from t where ( a, b ) >= ( ?, ? ) order by a, b, c");
     }
+
+    @Test
+    public void testCast() throws ParseException {
+    	helper.parse("select cast (a as text) from t");
+    }
+
+    @Test
+    public void testPostgresqlCast() throws ParseException {
+    	helper.parse("select a::text from t");
+    }
+
+    @Test
+    public void testSubstring() throws ParseException {
+    	helper.parse("select a, b, substr((a)::text, 1, 6) as c, substr((a)::text, 7, 14) as d, e from t where ( substr((a)::text, 1, 6), substr((a)::text, 7, 14) ) >= ( 'A', '' ) order by c, d, r");
+    }
 }

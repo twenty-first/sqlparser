@@ -117,6 +117,7 @@ LESS_EQ     : '<=' ;
 GRT_EQ      : '>=' ;
 LOG_OR      : '||' ;
 LOG_AND     : '&&' ;
+CAST		: '::' ;
 PLUS        : '+' ;
 MINUS       : '-' ;
 MULT        : '*' ;

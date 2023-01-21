@@ -393,7 +393,9 @@ factor :
             
 binaryOp :
     ( AND
+    | AS
     | BETWEEN
+    | CAST
     | COLLATE
     | CONCAT
     | NOT? IN
