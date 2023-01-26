@@ -442,7 +442,7 @@ indicator :
     ;
         	
 parameter :
-    COLON IDENTIFIER ( LPAR INTEGER RPAR )?
+    COLON ( RPG_IDENTIFIER | IDENTIFIER ) ( LPAR INTEGER RPAR )?
     ;
 
 number :
@@ -476,6 +476,7 @@ sqlWord :
 //    | VALUE
     | WHEN
     | IDENTIFIER
+    | RPG_IDENTIFIER
     | STRING
     | number
     | combinedInputParameter

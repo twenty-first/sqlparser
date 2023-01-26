@@ -238,4 +238,10 @@ public class ParserUnitTests extends TestBase {
     public void testSubstring() throws ParseException {
     	helper.parse("select a, b, substr((a)::text, 1, 6) as c, substr((a)::text, 7, 14) as d, e from t where ( substr((a)::text, 1, 6), substr((a)::text, 7, 14) ) >= ( 'A', '' ) order by c, d, r");
     }
+
+    @Test
+    public void testDollarInParamName() throws ParseException
+    {
+        helper.parse("select c1 into :$p from s.t where c2 = 'v'");
+    }
 }

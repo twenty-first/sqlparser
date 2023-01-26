@@ -331,7 +331,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public Parameter visitParameter(ParameterContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER().getText();
+		String name = ctx.IDENTIFIER() != null ? ctx.IDENTIFIER().getText() : ctx.RPG_IDENTIFIER().getText();
 		Integer index = ctx.INTEGER() != null ? Integer.decode(ctx.INTEGER().getText()) : null;
 		Parameter node = new Parameter(location, name, index);
 		AstHelper.visitChildren(this, ctx, node);

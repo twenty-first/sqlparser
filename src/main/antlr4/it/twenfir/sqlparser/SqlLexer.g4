@@ -130,6 +130,8 @@ RPAR        : ')' ;
 
 IDENTIFIER : ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
 
+RPG_IDENTIFIER : ( LETTER | DIGIT | '$' ) ( LETTER | DIGIT | '$' | '-' | '_' )* ;
+
 DB2_CONSTANT : '*' ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
 
 WHITESPACE : ( WS | NEWLINE )+  { setText(" "); } -> channel(HIDDEN) ;
