@@ -80,7 +80,7 @@ updateStatement :
     ;
 
 deleteStatement :
-    DELETE FROM table whereClause?
+    DELETE FROM? table whereClause?
     ;
 
 setStatement :

@@ -78,6 +78,13 @@ public class ParserUnitTests extends TestBase {
     }
     
     @Test
+    public void testDelete() throws ParseException
+    {
+        helper.parse("delete from t where f is null");
+        helper.parse("delete t where f is null");
+    }
+    
+    @Test
     public void testCreateIndex() throws ParseException
     {
         helper.parse("create unique index session.i on session.t " + 
