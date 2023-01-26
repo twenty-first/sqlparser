@@ -177,7 +177,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public DeclareCursorStatement visitDeclareCursorStatement(DeclareCursorStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
 		String name = ctx.name.getText();
-		String stmt = ctx.stmt.getText();
+		String stmt = ctx.stmt != null ? ctx.stmt.getText() : null;
 		DeclareCursorStatement node = new DeclareCursorStatement(location, name, stmt);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;

@@ -115,7 +115,10 @@ usingClause :
     ;
 
 declareCursorStatement :
-    DECLARE ( CURSOR name = IDENTIFIER | name = IDENTIFIER CURSOR ) FOR stmt = IDENTIFIER
+    DECLARE ( CURSOR name = IDENTIFIER | name = IDENTIFIER CURSOR ) FOR
+    ( stmt = IDENTIFIER
+    | simpleSelect
+    )
     ;
     
 prepareStatement : 

@@ -49,6 +49,7 @@ public class ParserUnitTests extends TestBase {
     {
         helper.parse("declare cursor c for s");
         helper.parse("declare c cursor for s");
+        helper.parse("declare c cursor for select * from t where f = 'A' and g = :h");
     }
 
     @Test
