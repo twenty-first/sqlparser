@@ -53,7 +53,7 @@ simpleSelect :
 	;
 	    
 insertStatement :
-    INSERT INTO table ( LPAR IDENTIFIER ( COMMA IDENTIFIER )* RPAR )? insertRowsClause?
+    INSERT INTO table ( LPAR identifier ( COMMA identifier )* RPAR )? insertRowsClause?
     ( insertValuesClause
     | LPAR selectStatement RPAR
     | selectStatement
@@ -74,8 +74,8 @@ insertValuesClause :
     ;
 
 updateStatement :
-    UPDATE table SET IDENTIFIER ( POINT IDENTIFIER )? EQUALS expression 
-    ( COMMA IDENTIFIER ( POINT IDENTIFIER )? EQUALS expression )*
+    UPDATE table SET identifier ( POINT identifier )? EQUALS expression 
+    ( COMMA identifier ( POINT identifier )? EQUALS expression )*
     whereClause?
     ;
 
@@ -84,7 +84,7 @@ deleteStatement :
     ;
 
 setStatement :
-    SET ( IDENTIFIER | combinedOutputParameter ) EQUALS expression
+    SET ( identifier | combinedOutputParameter ) EQUALS expression
     ;
 
 valuesStatement :
@@ -92,7 +92,7 @@ valuesStatement :
 	;
 	
 fetchStatement :
-    FETCH NEXT? FROM? IDENTIFIER intoClause
+    FETCH NEXT? FROM? identifier intoClause
     ;
         
 intoClause :
@@ -100,11 +100,11 @@ intoClause :
     ;
 
 executeStatement :
-    EXECUTE IMMEDIATE? ( IDENTIFIER | simpleInputParameter ) usingClause?
+    EXECUTE IMMEDIATE? ( identifier | simpleInputParameter ) usingClause?
     ;
         
 openStatement :
-    OPEN IDENTIFIER usingClause?
+    OPEN identifier usingClause?
     ;
 
 usingClause :
@@ -115,18 +115,18 @@ usingClause :
     ;
 
 declareCursorStatement :
-    DECLARE ( CURSOR name = IDENTIFIER | name = IDENTIFIER CURSOR ) FOR
-    ( stmt = IDENTIFIER
+    DECLARE ( CURSOR name = identifier | name = identifier CURSOR ) FOR
+    ( stmt = identifier
     | simpleSelect
     )
     ;
     
 prepareStatement : 
-    PREPARE IDENTIFIER FROM simpleInputParameter
+    PREPARE identifier FROM simpleInputParameter
     ;
     
 closeStatement :
-    CLOSE IDENTIFIER
+    CLOSE identifier
     ;
     
 declareTempTableStatement :
@@ -138,7 +138,7 @@ declareTempTableStatement :
 	;
 
 tableDefinition :
-    LPAR IDENTIFIER expression ( COMMA IDENTIFIER expression )* RPAR
+    LPAR identifier expression ( COMMA identifier expression )* RPAR
   ;
 
 temporaryTableOption :
@@ -149,7 +149,7 @@ temporaryTableOption :
 	;
 
 createTableStatement :
-    CREATE TEMPORARY? TABLE ( IF NOT EXISTS )? IDENTIFIER AS simpleSelect ( WITH NO? DATA )?
+    CREATE TEMPORARY? TABLE ( IF NOT EXISTS )? identifier AS simpleSelect ( WITH NO? DATA )?
     ;
 
 createIndexStatement :
@@ -158,7 +158,7 @@ createIndexStatement :
 	;
 
 alterTableStatement :
-ALTER TABLE IDENTIFIER ADD PRIMARY KEY LPAR IDENTIFIER ( COMMA IDENTIFIER )* RPAR
+ALTER TABLE identifier ADD PRIMARY KEY LPAR identifier ( COMMA identifier )* RPAR
     ;
 
 commitStatement :
@@ -166,7 +166,7 @@ commitStatement :
 	;
 	
 //callStatement :
-//    CALL IDENTIFIER LPAR callParam ( COMMA callParam )* RPAR
+//    CALL identifier LPAR callParam ( COMMA callParam )* RPAR
 //    ;
 
 //callParam :
@@ -188,7 +188,7 @@ optionClause :
     ;
 
 optionName :
-    IDENTIFIER
+    identifier
     | COMMIT
     ;
 
@@ -202,12 +202,12 @@ whereClause :
         
 selectColumn : 
     ( NEXTVAL FOR sequence
-    | columnExpression ( AS? IDENTIFIER )?
+    | columnExpression ( AS? identifier )?
     )
     ;
 
 columnExpression :
-    IDENTIFIER | expression
+    identifier | expression
     ;
 
 joinSource :
@@ -216,24 +216,24 @@ joinSource :
 
 tableOrSelect :
     ( table
-    | LPAR selectExpression RPAR ( AS? IDENTIFIER )?
+    | LPAR selectExpression RPAR ( AS? identifier )?
     )
     ;
 
 table :
-	( IDENTIFIER								
-	| IDENTIFIER schemaSeparator IDENTIFIER	
+	( identifier								
+	| identifier schemaSeparator identifier	
 	)
-	( AS? IDENTIFIER )?
+	( AS? identifier )?
 	;
 
 sequence :
-    IDENTIFIER
+    identifier
     ;
 
 index :
-	( IDENTIFIER 
-	| IDENTIFIER schemaSeparator IDENTIFIER
+	( identifier 
+	| identifier schemaSeparator identifier
 	)
 	;
 
@@ -248,7 +248,7 @@ localTableDefinition :
   ;
 
 localTable :
-	IDENTIFIER ( LPAR IDENTIFIER ( COMMA IDENTIFIER )* RPAR )?
+	identifier ( LPAR identifier ( COMMA identifier )* RPAR )?
 	;
 
 simpleOutputParameter :
@@ -315,7 +315,7 @@ term :
     | dateCall
     | timestampCall
 //    | function exprList?
-//    | IDENTIFIER exprList?
+//    | identifier exprList?
     | functionCall
     | exprList 
     | LPAR selectExpression RPAR
@@ -324,7 +324,7 @@ term :
 	;
 
 functionCall :
-    ( function | IDENTIFIER ) exprList?
+    ( function | identifier ) exprList?
     ;
     
 function :
@@ -389,8 +389,8 @@ factor :
     | combinedInputParameter
     | NULL
     | MULT
-    | IDENTIFIER POINT MULT
-    | IDENTIFIER POINT IDENTIFIER
+    | identifier POINT MULT
+    | identifier POINT identifier
     )
     ;
             
@@ -445,7 +445,7 @@ indicator :
     ;
         	
 parameter :
-    COLON ( RPG_IDENTIFIER | IDENTIFIER ) ( LPAR INTEGER RPAR )?
+    COLON ( identifier ) ( LPAR INTEGER RPAR )?
     ;
 
 number :
@@ -455,7 +455,11 @@ number :
 floating :
 	INTEGER DEC_PART
 	;
-	    
+	
+identifier :
+    IDENTIFIER | RPG_IDENTIFIER
+    ;
+    
 catchAll :
     sqlWord+ ( sqlSeparator+ sqlWord* )*
     ;
@@ -478,8 +482,7 @@ sqlWord :
     | USING
 //    | VALUE
     | WHEN
-    | IDENTIFIER
-    | RPG_IDENTIFIER
+    | identifier
     | STRING
     | number
     | combinedInputParameter

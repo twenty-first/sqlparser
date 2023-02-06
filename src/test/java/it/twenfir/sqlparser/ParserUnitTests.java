@@ -25,6 +25,11 @@ public class ParserUnitTests extends TestBase {
 	public void errorTest() {
 		assertThrows(ParseException.class, () -> helper.parse("select from t"));
 	}
+
+	@Test
+	public void dollarInIdentifierTest() throws ParseException {
+		helper.parse("select c$ from $t");
+	}
 	
     @Test
     public void testConcat() throws ParseException

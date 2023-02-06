@@ -99,7 +99,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public CloseStatement visitCloseStatement(CloseStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER().getText();
+		String name = ctx.identifier().getText();
 		CloseStatement node = new CloseStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -140,10 +140,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public ColumnExpression visitColumnExpression(ColumnExpressionContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = null;
-		if ( ctx.IDENTIFIER() != null ) {
-			name = ctx.IDENTIFIER().getText();
-		}
+		String name = ctx.identifier() != null ? ctx.identifier().getText() : null;
 		ColumnExpression node = new ColumnExpression(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -234,7 +231,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public FetchStatement visitFetchStatement(FetchStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER().getText();
+		String name = ctx.identifier().getText();
 		FetchStatement node = new FetchStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -252,7 +249,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public FunctionCall visitFunctionCall(FunctionCallContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER() != null ? ctx.IDENTIFIER().getText() : null;
+		String name = ctx.identifier() != null ? ctx.identifier().getText() : null;
 		FunctionCall node = new FunctionCall(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -297,7 +294,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public OpenStatement visitOpenStatement(OpenStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER().getText();
+		String name = ctx.identifier().getText();
 		OpenStatement node = new OpenStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -307,8 +304,8 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public OptionClause visitOptionClause(OptionClauseContext ctx) {
 		Location location = AstHelper.location(ctx);
 		String name = null;
-		if ( ctx.optionName().IDENTIFIER() != null ) {
-			name = ctx.optionName().IDENTIFIER().getText();
+		if ( ctx.optionName().identifier() != null ) {
+			name = ctx.optionName().identifier().getText();
 		}
 		else if ( ctx.optionName().COMMIT() != null ) {
 			name = ctx.optionName().COMMIT().getText();
@@ -331,7 +328,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public Parameter visitParameter(ParameterContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER() != null ? ctx.IDENTIFIER().getText() : ctx.RPG_IDENTIFIER().getText();
+		String name = ctx.identifier().getText();
 		Integer index = ctx.INTEGER() != null ? Integer.decode(ctx.INTEGER().getText()) : null;
 		Parameter node = new Parameter(location, name, index);
 		AstHelper.visitChildren(this, ctx, node);
@@ -341,7 +338,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public PrepareStatement visitPrepareStatement(PrepareStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.IDENTIFIER().getText();
+		String name = ctx.identifier().getText();
 		PrepareStatement node = new PrepareStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -350,7 +347,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public SelectColumn visitSelectColumn(SelectColumnContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String outputName = ctx.IDENTIFIER() != null ? ctx.IDENTIFIER().getText() : null;
+		String outputName = ctx.identifier() != null ? ctx.identifier().getText() : null;
 		SelectColumn node = new SelectColumn(location, outputName);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
@@ -384,8 +381,8 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public SetStatement visitSetStatement(SetStatementContext ctx) {
 		Location location = AstHelper.location(ctx);
 		String name = null;
-		if ( ctx.IDENTIFIER() != null ) {
-			name = ctx.IDENTIFIER().getText();
+		if ( ctx.identifier() != null ) {
+			name = ctx.identifier().getText();
 		}
 		SetStatement node = new SetStatement(location, name);
 		AstHelper.visitChildren(this, ctx, node);
