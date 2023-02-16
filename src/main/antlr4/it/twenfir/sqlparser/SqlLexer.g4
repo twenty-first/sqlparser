@@ -136,6 +136,8 @@ DB2_CONSTANT : '*' ( LETTER | DIGIT ) ( LETTER | DIGIT | '-' | '_' )* ;
 
 WHITESPACE : ( WS | NEWLINE )+  { setText(" "); } -> channel(HIDDEN) ;
 
+COMMENT : ( '--' | '//' ) SAME_LINE* NEWLINE  { setText(" "); } -> channel(HIDDEN) ;
+
 // Character groups
 
 fragment WS : ' ' | '\t' | ';' ;

@@ -27,6 +27,11 @@ public class ParserUnitTests extends TestBase {
 	}
 
 	@Test
+	public void commentTest() throws ParseException {
+		helper.parse("select c -- COMMENT\nfrom t");
+	}
+
+	@Test
 	public void dollarInIdentifierTest() throws ParseException {
 		helper.parse("select c$ from $t");
 	}
