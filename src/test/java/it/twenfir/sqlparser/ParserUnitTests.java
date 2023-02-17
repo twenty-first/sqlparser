@@ -35,6 +35,16 @@ public class ParserUnitTests extends TestBase {
 	public void dollarInIdentifierTest() throws ParseException {
 		helper.parse("select c$ from $t");
 	}
+
+	@Test
+	public void simpleParameterNameTest() throws ParseException {
+		helper.parse("select c from t where d = :e");
+	}
+
+	@Test
+	public void qualifiedParameterNameTest() throws ParseException {
+		helper.parse("select c from t where d = :e.f");
+	}
 	
     @Test
     public void testConcat() throws ParseException

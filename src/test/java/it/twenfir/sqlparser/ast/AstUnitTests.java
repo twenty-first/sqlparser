@@ -33,7 +33,13 @@ public class AstUnitTests extends TestBase {
 		termIter.next();
 		assertEquals("a", termIter.next().getFactor().getCombinedInputParameter().getParameter().getName());
 	}
-	
+
+	@Test
+	public void qualifiedParameterNameTest() throws ParseException {
+		SelectStatement statement = (SelectStatement)helper.ast("select c from t where d = :e.f");
+		InputParameter p = statement.getInputParameters().next();
+		assertEquals("e.f", p.getParameter().getName());
+	}
 
     @Test
     public void testDb2SetOptions() throws ParseException

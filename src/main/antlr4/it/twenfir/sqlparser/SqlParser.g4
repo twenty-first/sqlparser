@@ -445,7 +445,7 @@ indicator :
     ;
         	
 parameter :
-    COLON ( identifier ) ( LPAR INTEGER RPAR )?
+    COLON ( identifier POINT )? identifier ( LPAR INTEGER RPAR )?
     ;
 
 number :
