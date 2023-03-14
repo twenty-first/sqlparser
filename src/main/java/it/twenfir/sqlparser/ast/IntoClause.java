@@ -12,8 +12,8 @@ public class IntoClause extends AstNode {
 		super(location);
 	}
 	
-	public Iterator<CombinedOutputParameter> getCombinedOutputParameters() {
-		return getChildren(CombinedOutputParameter.class);
+	public Iterator<OutputParameter> getOutputParameters() {
+		return getChildren(OutputParameter.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

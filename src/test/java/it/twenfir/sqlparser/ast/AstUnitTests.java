@@ -25,7 +25,7 @@ public class AstUnitTests extends TestBase {
 		String s = "select count(*) into :c :b from t where p=:a and f='V' and o in ('P','A')";
 		SelectStatement statement = (SelectStatement)helper.ast(s);
 		SimpleSelect simpleSelect = statement.getSelectExpression().getSimpleSelects().next();
-		CombinedOutputParameter cop = simpleSelect.getIntoClause().getCombinedOutputParameters().next();
+		CombinedOutputParameter cop = (CombinedOutputParameter)simpleSelect.getIntoClause().getOutputParameters().next();
 		assertEquals("c", cop.getParameter().getName());
 		assertEquals("b", cop.getIndicator().getName());
 		Expression expression = simpleSelect.getWhereClause().getExpression();
