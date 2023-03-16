@@ -5,9 +5,14 @@ import it.twenfir.antlr.ast.Location;
 
 public abstract class InputParameter extends AstNode {
 
-    public InputParameter(Location location) {
+	private Parameter parameter;
+
+	public InputParameter(Location location, Parameter parameter) {
         super(location);
+		this.parameter = parameter;
     }
     
-    public abstract Parameter getParameter();
+	public Parameter getParameter() {
+		return parameter;
+	}
 }

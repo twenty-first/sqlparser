@@ -395,7 +395,11 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public SimpleInputParameter visitSimpleInputParameter(SimpleInputParameterContext ctx) {
 		Location location = AstHelper.location(ctx);
-		SimpleInputParameter node = new SimpleInputParameter(location);
+		Parameter parameter = null;
+		if ( ctx.inputParameter() != null ) {
+			parameter = (Parameter)AstHelper.visitChild(this, ctx.inputParameter());
+		}
+		SimpleInputParameter node = new SimpleInputParameter(location, parameter);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
@@ -403,7 +407,11 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public SimpleOutputParameter visitSimpleOutputParameter(SimpleOutputParameterContext ctx) {
 		Location location = AstHelper.location(ctx);
-		SimpleOutputParameter node = new SimpleOutputParameter(location);
+		Parameter parameter = null;
+		if ( ctx.outputParameter() != null ) {
+			parameter = (Parameter)AstHelper.visitChild(this, ctx.outputParameter());
+		}
+		SimpleOutputParameter node = new SimpleOutputParameter(location, parameter);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

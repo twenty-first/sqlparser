@@ -5,10 +5,14 @@ import it.twenfir.antlr.ast.Location;
 
 public abstract class OutputParameter extends AstNode {
 
-    public OutputParameter(Location location) {
+	private Parameter parameter;
+
+    public OutputParameter(Location location, Parameter parameter) {
         super(location);
+		this.parameter = parameter;
     }
     
-    public abstract Parameter getParameter();
-
+	public Parameter getParameter() {
+		return parameter;
+	}
 }

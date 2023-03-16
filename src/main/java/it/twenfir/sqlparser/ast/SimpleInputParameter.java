@@ -5,12 +5,8 @@ import it.twenfir.antlr.ast.Location;
 
 public class SimpleInputParameter extends InputParameter {
 
-	public SimpleInputParameter(Location location) {
-		super(location);
-	}
-
-	public Parameter getParameter() {
-		return getChild(Parameter.class);
+	public SimpleInputParameter(Location location, Parameter parameter) {
+		super(location, parameter);
 	}
 
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {

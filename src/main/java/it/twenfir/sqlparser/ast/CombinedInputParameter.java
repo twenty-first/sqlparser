@@ -5,17 +5,11 @@ import it.twenfir.antlr.ast.Location;
 
 public class CombinedInputParameter extends InputParameter {
 
-	private Parameter parameter;
 	private Parameter indicator;
 
 	public CombinedInputParameter(Location location, Parameter parameter, Parameter indicator) {
-		super(location);
-		this.parameter = parameter;
+		super(location, parameter);
 		this.indicator = indicator;
-	}
-
-	public Parameter getParameter() {
-		return parameter;
 	}
 
 	public Parameter getIndicator() {
