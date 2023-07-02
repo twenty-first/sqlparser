@@ -27,6 +27,7 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitLocalTableDefinition(LocalTableDefinition node);
     ValueT visitOpenStatement(OpenStatement node);
     ValueT visitOptionClause(OptionClause node);
+    ValueT visitOrReplaceClause(OrReplaceClause node);
     ValueT visitOutputParameter(OutputParameter node);
     ValueT visitParameter(Parameter node);
     ValueT visitPrepareStatement(PrepareStatement node);

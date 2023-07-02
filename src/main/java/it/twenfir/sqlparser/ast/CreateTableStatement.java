@@ -9,6 +9,10 @@ public class CreateTableStatement extends Statement {
         super(location);
     }
 	
+    public boolean isReplace() {
+    	return getChild(OrReplaceClause.class) != null;
+    }
+    
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
 		if ( visitor instanceof SqlVisitor ) {
 			return ((SqlVisitor<? extends ValueT>) visitor).visitCreateTableStatement(this);

@@ -125,6 +125,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitOrReplaceClause(OrReplaceClause node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitOutputParameter(OutputParameter node) {
         return visitChildren(node);
     }

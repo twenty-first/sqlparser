@@ -149,9 +149,16 @@ temporaryTableOption :
 	;
 
 createTableStatement :
-    CREATE TEMPORARY? TABLE ( IF NOT EXISTS )? identifier AS simpleSelect ( WITH NO? DATA )?
+    CREATE ( orReplaceClause )? TEMPORARY? TABLE ( IF NOT EXISTS )? table
+    ( AS simpleSelect ( WITH NO? DATA )?
+    | tableDefinition
+    )
     ;
 
+orReplaceClause :
+	OR REPLACE
+	;
+	
 createIndexStatement :
 	CREATE UNIQUE? INDEX index ON table LPAR orderingTerm ( COMMA orderingTerm )* RPAR 
 	( USING catchAll )?
