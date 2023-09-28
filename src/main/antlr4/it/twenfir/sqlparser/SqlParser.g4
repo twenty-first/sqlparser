@@ -464,7 +464,7 @@ floating :
 	;
 	
 identifier :
-    IDENTIFIER | RPG_IDENTIFIER
+    IDENTIFIER | RPG_IDENTIFIER | TEMPORARY
     ;
     
 catchAll :

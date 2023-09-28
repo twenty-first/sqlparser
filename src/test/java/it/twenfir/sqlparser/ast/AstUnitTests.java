@@ -91,4 +91,17 @@ public class AstUnitTests extends TestBase {
 		assertNotNull(ce);
 		assertEquals("c", ce.getName());
 	}
+
+    @Test
+    public void testParameterNamedTemp() throws ParseException
+    {
+        SelectStatement statement = (SelectStatement)helper.ast("select count(f) into :op from t where g = :ip and " + 
+                "f like '' concat rtrim(:temp) concat '%' concat '' and h <> 'ok' and i <> 0");
+    	SimpleSelect ss = statement.getSelectExpression().getSimpleSelects().next();
+		WhereClause wc = ss.getWhereClause();
+		Iterator<InputParameter> iter = wc.getDescendants(InputParameter.class);
+		iter.next();
+		InputParameter p = iter.next();
+		assertEquals("temp", p.getParameter().getName());
+    }
 }
