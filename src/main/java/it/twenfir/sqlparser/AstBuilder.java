@@ -20,6 +20,7 @@ import it.twenfir.sqlparser.SqlParser.ExprListContext;
 import it.twenfir.sqlparser.SqlParser.ExpressionContext;
 import it.twenfir.sqlparser.SqlParser.FactorContext;
 import it.twenfir.sqlparser.SqlParser.FetchStatementContext;
+import it.twenfir.sqlparser.SqlParser.FromClauseContext;
 import it.twenfir.sqlparser.SqlParser.FunctionCallContext;
 import it.twenfir.sqlparser.SqlParser.FunctionContext;
 import it.twenfir.sqlparser.SqlParser.IndicatorContext;
@@ -46,6 +47,7 @@ import it.twenfir.sqlparser.SqlParser.UpdateStatementContext;
 import it.twenfir.sqlparser.SqlParser.UsingClauseContext;
 import it.twenfir.sqlparser.SqlParser.ValuesStatementContext;
 import it.twenfir.sqlparser.SqlParser.WhereClauseContext;
+import it.twenfir.sqlparser.SqlParser.WithUrClauseContext;
 import it.twenfir.sqlparser.ast.AlterTableStatement;
 import it.twenfir.sqlparser.ast.CloseStatement;
 import it.twenfir.sqlparser.ast.ColumnExpression;
@@ -62,6 +64,7 @@ import it.twenfir.sqlparser.ast.ExprList;
 import it.twenfir.sqlparser.ast.Expression;
 import it.twenfir.sqlparser.ast.Factor;
 import it.twenfir.sqlparser.ast.FetchStatement;
+import it.twenfir.sqlparser.ast.FromClause;
 import it.twenfir.sqlparser.ast.Function;
 import it.twenfir.sqlparser.ast.FunctionCall;
 import it.twenfir.sqlparser.ast.InsertStatement;
@@ -85,6 +88,7 @@ import it.twenfir.sqlparser.ast.UpdateStatement;
 import it.twenfir.sqlparser.ast.UsingClause;
 import it.twenfir.sqlparser.ast.ValuesStatement;
 import it.twenfir.sqlparser.ast.WhereClause;
+import it.twenfir.sqlparser.ast.WithUrClause;
 
 public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 
@@ -233,6 +237,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 		Location location = AstHelper.location(ctx);
 		String name = ctx.identifier().getText();
 		FetchStatement node = new FetchStatement(location, name);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public FromClause visitFromClause(FromClauseContext ctx) {
+		Location location = AstHelper.location(ctx);
+		FromClause node = new FromClause(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}
@@ -469,6 +481,14 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	public WhereClause visitWhereClause(WhereClauseContext ctx) {
 		Location location = AstHelper.location(ctx);
 		WhereClause node = new WhereClause(location);
+		AstHelper.visitChildren(this, ctx, node);
+		return node;
+	}
+
+	@Override
+	public WithUrClause visitWithUrClause(WithUrClauseContext ctx) {
+		Location location = AstHelper.location(ctx);
+		WithUrClause node = new WithUrClause(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

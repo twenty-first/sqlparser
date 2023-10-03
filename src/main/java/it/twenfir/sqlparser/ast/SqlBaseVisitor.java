@@ -85,6 +85,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
     }
 
     @Override
+    public ValueT visitFromClause(FromClause node) {
+        return visitChildren(node);
+    }
+
+    @Override
     public ValueT visitFunction(Function node) {
         return visitChildren(node);
     }
@@ -211,6 +216,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
 
     @Override
     public ValueT visitWhereClause(WhereClause node) {
+        return visitChildren(node);
+    }
+
+    @Override
+    public ValueT visitWithUrClause(WithUrClause node) {
         return visitChildren(node);
     }
     

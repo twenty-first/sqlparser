@@ -19,6 +19,7 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitExprList(ExprList node);
     ValueT visitFactor(Factor node);
     ValueT visitFetchStatement(FetchStatement node);
+    ValueT visitFromClause(FromClause node);
     ValueT visitFunction(Function node);
     ValueT visitFunctionCall(FunctionCall node);
     ValueT visitInputParameter(InputParameter node);
@@ -45,4 +46,5 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitUsingClause(UsingClause node);
     ValueT visitValuesStatement(ValuesStatement node);
     ValueT visitWhereClause(WhereClause node);
+    ValueT visitWithUrClause(WithUrClause node);
 }

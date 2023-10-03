@@ -20,6 +20,10 @@ public class SetStatement extends Statement {
 		return getChild(OutputParameter.class);
 	}
 	
+	public SelectExpression getSelectExpression() {
+		return getDescendant(SelectExpression.class);
+	}
+	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
 		if ( visitor instanceof SqlVisitor ) {
 			return ((SqlVisitor<? extends ValueT>) visitor).visitSetStatement(this);

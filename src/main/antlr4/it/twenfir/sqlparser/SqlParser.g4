@@ -32,7 +32,11 @@ statement :
 selectStatement :
     ( WITH localTableDefinition ( COMMA localTableDefinition )* )? 
     selectExpression //( selectModifier )*
-    ( WITH UR )?
+    withUrClause?
+    ;
+
+withUrClause :
+    WITH UR
     ;
 
 selectExpression :
@@ -42,7 +46,7 @@ selectExpression :
 simpleSelect :
     SELECT ( ALL | DISTINCT )? selectColumn ( COMMA selectColumn )*
     intoClause?
-    ( FROM joinSource ( COMMA joinSource )* )?
+    fromClause?
     whereClause?
     ( GROUP BY orderingTerm ( COMMA orderingTerm )* ( HAVING expression )? )?
     ( ORDER BY orderingTerm ( COMMA orderingTerm )* )?
@@ -97,6 +101,10 @@ fetchStatement :
         
 intoClause :
     INTO combinedOutputParameter ( COMMA combinedOutputParameter )*
+    ;
+
+fromClause :
+    FROM joinSource ( COMMA joinSource )*
     ;
 
 executeStatement :
