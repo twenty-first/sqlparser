@@ -20,8 +20,8 @@ public class SetStatement extends Statement {
 		return getChild(OutputParameter.class);
 	}
 	
-	public SelectExpression getSelectExpression() {
-		return getDescendant(SelectExpression.class);
+	public Expression getExpression() {
+		return getChild(Expression.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
