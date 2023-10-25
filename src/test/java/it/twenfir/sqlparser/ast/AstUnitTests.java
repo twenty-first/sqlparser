@@ -104,4 +104,13 @@ public class AstUnitTests extends TestBase {
 		InputParameter p = iter.next();
 		assertEquals("temp", p.getParameter().getName());
     }
+
+    @Test
+    public void testSelectIntoWithIndicator() throws ParseException
+    {
+    	SelectStatement statement = (SelectStatement)helper.ast("select c1 into :p :i from s.t where c2 = 'v'");
+		Iterator<CombinedOutputParameter> iter = statement.getDescendants(CombinedOutputParameter.class);
+		CombinedOutputParameter p = iter.next();
+		assertEquals("i", p.getIndicator().getName());
+    }
 }

@@ -211,6 +211,12 @@ public class ParserUnitTests extends TestBase {
     }
 
     @Test
+    public void testSelectIntoWithIndicator() throws ParseException
+    {
+        helper.parse("select c1 into :p :i from s.t where c2 = 'v'");
+    }
+
+    @Test
     public void testSetOption() throws ParseException
     {
         helper.parse("set random_page_cost = 0.1");
