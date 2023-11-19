@@ -1,5 +1,8 @@
 package it.twenfir.sqlparser;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.RuleNode;
+
 import it.twenfir.antlr.ast.AstHelper;
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.Location;
@@ -91,6 +94,11 @@ import it.twenfir.sqlparser.ast.WhereClause;
 import it.twenfir.sqlparser.ast.WithUrClause;
 
 public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
+
+	@Override
+	public AstNode visitChildren(RuleNode node) {
+		return AstHelper.visit(this, (ParserRuleContext)node);
+	}
 
 	@Override
 	public AlterTableStatement visitAlterTableStatement(AlterTableStatementContext ctx) {
