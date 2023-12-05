@@ -14,6 +14,7 @@ public interface SqlVisitor<ValueT> extends AstVisitor<ValueT> {
     ValueT visitDeclareCursorStatement(DeclareCursorStatement node);
     ValueT visitDeclareTempTableStatement(DeclareTempTableStatement node);
     ValueT visitDeleteStatement(DeleteStatement node);
+    ValueT visitDropTableStatement(DropTableStatement node);
     ValueT visitExecuteStatement(ExecuteStatement node);
     ValueT visitExpression(Expression node);
     ValueT visitExprList(ExprList node);

@@ -15,6 +15,7 @@ statement :
     | declareCursorStatement
     | declareTempTableStatement
     | deleteStatement
+    | dropTableStatement
     | executeStatement
     | fetchStatement
     | insertStatement
@@ -87,6 +88,10 @@ deleteStatement :
     DELETE FROM? table whereClause?
     ;
 
+dropTableStatement :
+	DROP TABLE table
+	;
+	
 setStatement :
     SET ( identifier | combinedOutputParameter ) EQUALS expression
     ;

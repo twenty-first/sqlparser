@@ -2,7 +2,7 @@ package it.twenfir.sqlparser.ast;
 
 import it.twenfir.antlr.ast.BaseAstVisitor;
 
-public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> implements SqlVisitor<ValueT> {
+public class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> implements SqlVisitor<ValueT> {
 
     @Override
 	public ValueT visitAlterTableStatement(AlterTableStatement node) {
@@ -59,6 +59,11 @@ public abstract class SqlBaseVisitor<ValueT> extends BaseAstVisitor<ValueT> impl
         return visitChildren(node);
 	}
 
+	@Override
+	public ValueT visitDropTableStatement(DropTableStatement node) {
+        return visitChildren(node);
+	}
+	
 	@Override
 	public ValueT visitExecuteStatement(ExecuteStatement node) {
         return visitChildren(node);

@@ -292,4 +292,9 @@ public class ParserUnitTests extends TestBase {
         helper.parse("select count(f) into :op from t where g = :ip and " + 
                 "f like '' concat rtrim(:temp) concat '%' concat '' and h <> 'ok' and i <> 0");
     }
+    
+    @Test
+    public void testDropTable() {
+    	helper.parse("drop table qtemp/cau_bol");
+    }
 }
