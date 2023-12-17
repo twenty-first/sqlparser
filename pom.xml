@@ -10,7 +10,7 @@
 
     <groupId>it.twenfir</groupId>
     <artifactId>sqlparser</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>sqlparser</name>
     <description>
@@ -126,6 +126,6 @@
         <connection>scm:git:git@github.com:twenty-first/sqlparser.git</connection>
         <developerConnection>scm:git:git@github.com:twenty-first/sqlparser.git</developerConnection>
         <url>https://github.com/twenty-first/sqlparser.git</url>
-      <tag>v0.0.2</tag>
+      <tag>0.0</tag>
   </scm>
 </project>
