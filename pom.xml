@@ -57,11 +57,15 @@
         <dependency>
             <groupId>it.twenfir</groupId>
             <artifactId>twenfir-antlr</artifactId>
+<<<<<<< Upstream, based on 345698b8cf5a107898ac4a57f67518e14291f00c
 <<<<<<< HEAD
             <version>0.1.3</version>
 =======
             <version>0.0.9-SNAPSHOT</version>
 >>>>>>> 1714345 (Bump down Antlr 4)
+=======
+            <version>0.0.9</version>
+>>>>>>> 8e2c9b1 Bump twenfir-antlr version
         </dependency>
          <dependency>
             <groupId>org.antlr</groupId>
