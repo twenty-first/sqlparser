@@ -14,7 +14,11 @@
 
     <groupId>it.twenfir</groupId>
     <artifactId>sqlparser</artifactId>
+<<<<<<< Upstream, based on 345698b8cf5a107898ac4a57f67518e14291f00c
     <version>0.1.3-SNAPSHOT</version>
+=======
+    <version>0.0.2</version>
+>>>>>>> f54fd7b [maven-release-plugin] prepare release v0.0.2
 
     <name>sqlparser</name>
     <description>
@@ -138,6 +142,10 @@
         <connection>scm:git:git@github.com:twenty-first/sqlparser.git</connection>
         <developerConnection>scm:git:git@github.com:twenty-first/sqlparser.git</developerConnection>
         <url>https://github.com/twenty-first/sqlparser.git</url>
+<<<<<<< Upstream, based on 345698b8cf5a107898ac4a57f67518e14291f00c
       <tag>HEAD</tag>
+=======
+      <tag>v0.0.2</tag>
+>>>>>>> f54fd7b [maven-release-plugin] prepare release v0.0.2
   </scm>
 </project>
