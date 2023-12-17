@@ -126,6 +126,6 @@
         <connection>scm:git:git@github.com:twenty-first/sqlparser.git</connection>
         <developerConnection>scm:git:git@github.com:twenty-first/sqlparser.git</developerConnection>
         <url>https://github.com/twenty-first/sqlparser.git</url>
-      <tag>HEAD</tag>
+      <tag>0.0</tag>
   </scm>
 </project>
