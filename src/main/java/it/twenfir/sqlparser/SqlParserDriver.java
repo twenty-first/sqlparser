@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.TokenStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.twenfir.antlr.api.ErrorListener;
 import it.twenfir.antlr.exception.ParseException;
 import it.twenfir.antlr.parser.LoggingTokenSource;
 import it.twenfir.antlr.parser.ParserDriverBase;
@@ -21,13 +22,19 @@ public class SqlParserDriver extends ParserDriverBase {
 	private SqlParser parser;
 	private StatementContext parseTree;
 	private Statement statement;
+	private ErrorListener listener;
 	
 	public SqlParserDriver(String statement) {
+		this(statement, null);
+	}
+	
+	public SqlParserDriver(String statement, ErrorListener listener) {
         super("sqlparser", log);
+        this.listener = listener != null ? listener : this;
         CodePointCharStream inputStream = CharStreams.fromString(statement);
         SqlLexer lexer = new SqlLexer(inputStream);
         lexer.removeErrorListeners();
-        lexer.addErrorListener(this);
+        lexer.addErrorListener(this.listener);
         LoggingTokenSource source = new LoggingTokenSource(lexer);
         tokenStream = new CommonTokenStream(source);
         parser = new SqlParser(tokenStream);
@@ -48,7 +55,7 @@ public class SqlParserDriver extends ParserDriverBase {
     public Statement makeAst() {
     	if ( statement == null ) {
             StatementContext tree = parse();
-            AstBuilder builder = new AstBuilder();
+            AstBuilder builder = new AstBuilder(listener);
             statement = builder.visitStatement(tree);
     	}
         return statement;

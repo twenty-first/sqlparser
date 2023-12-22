@@ -3,10 +3,12 @@ package it.twenfir.sqlparser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.RuleNode;
 
+import it.twenfir.antlr.api.ErrorListener;
 import it.twenfir.antlr.ast.AstHelper;
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.Location;
 import it.twenfir.antlr.exception.AstException;
+import it.twenfir.antlr.parser.ErrorListenerBase;
 import it.twenfir.sqlparser.SqlParser.AlterTableStatementContext;
 import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
 import it.twenfir.sqlparser.SqlParser.ColumnExpressionContext;
@@ -96,6 +98,12 @@ import it.twenfir.sqlparser.ast.WhereClause;
 import it.twenfir.sqlparser.ast.WithUrClause;
 
 public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
+	
+	private ErrorListener listener;
+
+	public AstBuilder(ErrorListener listener) {
+		this.listener = listener != null ? listener : new ErrorListenerBase();
+	}
 
 	@Override
 	public AstNode visitChildren(RuleNode node) {
