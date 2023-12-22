@@ -5,12 +5,12 @@
     <parent>
         <groupId>it.twenfir</groupId>
         <artifactId>twenfir-bom</artifactId>
-        <version>0.1.0</version>
+        <version>0.0.7</version>
     </parent>
 
     <groupId>it.twenfir</groupId>
     <artifactId>sqlparser</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>sqlparser</name>
     <description>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>it.twenfir</groupId>
             <artifactId>twenfir-antlr</artifactId>
-            <version>0.1.1</version>
+            <version>0.0.10</version>
         </dependency>
          <dependency>
             <groupId>org.antlr</groupId>
@@ -126,6 +126,6 @@
         <connection>scm:git:git@github.com:twenty-first/sqlparser.git</connection>
         <developerConnection>scm:git:git@github.com:twenty-first/sqlparser.git</developerConnection>
         <url>https://github.com/twenty-first/sqlparser.git</url>
-      <tag>HEAD</tag>
+      <tag>0.0</tag>
   </scm>
 </project>
