@@ -8,7 +8,7 @@ import it.twenfir.antlr.ast.AstHelper;
 import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.Location;
 import it.twenfir.antlr.exception.AstException;
-import it.twenfir.antlr.parser.ErrorListenerBase;
+import it.twenfir.antlr.parser.DefaultErrorListener;
 import it.twenfir.sqlparser.SqlParser.AlterTableStatementContext;
 import it.twenfir.sqlparser.SqlParser.CloseStatementContext;
 import it.twenfir.sqlparser.SqlParser.ColumnExpressionContext;
@@ -102,7 +102,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	private ErrorListener listener;
 
 	public AstBuilder(ErrorListener listener) {
-		this.listener = listener != null ? listener : new ErrorListenerBase();
+		this.listener = listener != null ? listener : new DefaultErrorListener();
 	}
 
 	@Override

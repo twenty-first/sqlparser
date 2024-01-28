@@ -46,7 +46,7 @@ public class SqlParserDriver extends ParserDriverBase {
     	if ( parseTree == null ) {
             parseTree = parser.statement();
     	}
-    	if ( isErrors() ) {
+    	if ( listener.isErrors() ) {
     		throw new ParseException("Parse failed");
     	}
         return parseTree;
