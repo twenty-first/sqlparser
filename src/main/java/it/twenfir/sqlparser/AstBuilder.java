@@ -99,6 +99,7 @@ import it.twenfir.sqlparser.ast.WithUrClause;
 
 public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	
+	@SuppressWarnings("unused")
 	private ErrorListener listener;
 
 	public AstBuilder(ErrorListener listener) {
@@ -288,8 +289,7 @@ public class AstBuilder extends SqlParserBaseVisitor<AstNode> {
 	@Override
 	public FunctionCall visitFunctionCall(FunctionCallContext ctx) {
 		Location location = AstHelper.location(ctx);
-		String name = ctx.identifier() != null ? ctx.identifier().getText() : null;
-		FunctionCall node = new FunctionCall(location, name);
+		FunctionCall node = new FunctionCall(location);
 		AstHelper.visitChildren(this, ctx, node);
 		return node;
 	}

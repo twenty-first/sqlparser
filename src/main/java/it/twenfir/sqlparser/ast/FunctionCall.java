@@ -5,19 +5,9 @@ import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
 public class FunctionCall extends AstNode {
-
-	private String name;
 	
-	public FunctionCall(Location location, String name) {
+	public FunctionCall(Location location) {
 		super(location);
-		this.name = name;
-	}
-	
-	public String getName() {
-		if ( name == null ) {
-			name = getFunction().getName();
-		}
-		return name;
 	}
 	
 	public Function getFunction() {

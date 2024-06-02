@@ -51,7 +51,7 @@ public class AstUnitTests extends TestBase {
     }
 
     private void checkLocate(FunctionCall fc, int argc) {
-    	assertEquals("locate", fc.getName());
+    	assertEquals("locate", fc.getFunction().getName());
     	Iterator<Expression> expIter = fc.getExprList().getExpressions();
     	for ( int i = 0; i < argc; i++ ) {
     		expIter.next();
