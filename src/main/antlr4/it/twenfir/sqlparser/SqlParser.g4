@@ -344,7 +344,7 @@ term :
 	;
 
 functionCall :
-    ( function | identifier ) exprList?
+    function exprList?
     ;
     
 function :
@@ -356,6 +356,7 @@ function :
 	| MONTH
 //	| VALUE
 	| YEAR
+	| identifier
 	)
 	;
 	
