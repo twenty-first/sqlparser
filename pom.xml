@@ -6,6 +6,7 @@
         <groupId>it.twenfir</groupId>
         <artifactId>twenfir-bom</artifactId>
         <version>0.0.8</version>
+        <relativePath></relativePath>
     </parent>
 
     <groupId>it.twenfir</groupId>
