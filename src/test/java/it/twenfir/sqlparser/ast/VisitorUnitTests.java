@@ -70,4 +70,36 @@ public class VisitorUnitTests extends TestBase {
     	int i = visitor.visitStatement(statement);
     	assertEquals(4, i);
     }
+    
+    @Test
+    public void testVisitOrder() {
+    	SqlBaseVisitor<Integer> visitor = new SqlBaseVisitor<Integer>() {
+
+			@Override
+			public Integer defaultValue() {
+				return 0;
+			}
+
+			@Override
+			public Integer aggregate(Integer accumulator, Integer value) {
+				return accumulator != 0 ? accumulator : value;
+			}
+
+			@Override
+			public Integer visitStatement(Statement node) {
+				return node.accept(this);
+			}
+			
+			@Override
+			public Integer visitTable(Table node) {
+				return 1;
+			}
+
+			@Override
+			public Integer visitTruncateStatement(TruncateStatement node) {
+				return aggregate(2, visitChildren(node));
+			}
+    	};
+    	assertEquals(2, helper.visit("truncate table t", visitor));
+    }
 }

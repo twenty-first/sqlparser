@@ -2,6 +2,7 @@ package it.twenfir.sqlparser;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -269,6 +270,12 @@ public class ParserUnitTests extends TestBase {
     }
 
     @Test
+    @Disabled
+    public void testSimpleSubstring() throws ParseException {
+    	helper.parse("select substr(field, 1, 4) into dnaz from p99tabe where fld01 = 'naz' and soci = '**' and ctab = rqanag.qarstat");
+    }
+
+    @Test
     public void testSubstring() throws ParseException {
     	helper.parse("select a, b, substr((a)::text, 1, 6) as c, substr((a)::text, 7, 14) as d, e " +
                 "from t where ( substr((a)::text, 1, 6), substr((a)::text, 7, 14) ) >= ( 'A', '' ) order by c, d, r");
@@ -297,4 +304,102 @@ public class ParserUnitTests extends TestBase {
     public void testDropTable() {
     	helper.parse("drop table qtemp/cau_bol");
     }
+    
+    @Test
+    public void testComplexExpression() {
+    	helper.parse("select count(*) into :sql_conta from priugg0f where ((((uganno*100)+ugmese)*100)+uggior)" + 
+    			">=:sql_data and ugfond=:sql_fondo and ugfl02 in('p','g')");
+    }
+    
+    @Test
+    public void testFetchFor() {
+    	helper.parse("fetch c1 for :nrrows rows into :dsmotra");
+    }
+    
+    @Test
+    public void testCreateTableAsSelect() {
+    	helper.parse("create table qtemp.wani0102 as (select ecrap, a.* from fuscon00f a join mosot00f on ffprog=eprog ) definition only rcdfmt wa0102");
+    }
+    
+    @Test
+    public void testCreateTableWithColumns() {
+    	helper.parse("create table qtemp/stprz00f ( stdpro numeric(8) default 0 not null, row_rrn bigint not null default nextval('qtemp/stprz00f_rrn_seq') )");
+    }
+    
+    @Test
+    public void testInsert() {
+    	helper.parse("insert into p01vrap00 values :dsp01vrap");
+    }
+    
+    @Test
+    public void testComplexDeclareCursor() {
+    	helper.parse(
+    			"declare c1 cursor for " +
+				"select ifnull(char(substring(field, 31, 20), 20), 'NODESC') as DESC , t.*, (" +
+				"	select count(distinct sccrap) from salday0f " +
+				") as NRAPTOT from (" +
+				"	select scfond , decimal(sum(rap), 10 , 0) as NRAP , decimal(sum(patrim), 15 , 2) as VPAT , decimal(ravall, 10 , 3) as VQUO, decimal(quote, 18 , 6) as NQUO from (" +
+				"		select scfond, quote, quote * ravall patrim, ravall, rap from (" +
+				"			select scfond, sum(scquoc+scquof) quote, count(distinct sccrap) rap from salday0f group by scfond " +
+				"		) as a " +
+				"		inner join (" +
+				"			select b.rafond, b.ravall, b.radatv from  vlqfon0f as b inner join (" +
+				"				select rafond, radatv dt from vlqfon0f where radatv = :w_data group by rafond , radatv " +
+				"			) as c on b.rafond=c.rafond and b.radatv=dt " +
+				"		) as d on a.scfond=d.rafond " +
+				"	) as e group by scfond , ravall , quote " +
+				") as t left join atabell on keyfl = 'TABSOCA1' order by scfond" +
+    			""
+		);
+    }
+    
+    @Test
+    public void testPostgresqlSubstring() {
+    	helper.parse("select substring(value from ? for ?) from dtaara where name = ?");
+    }
+    
+    @Test
+    public void testValueAsIdentifier() {
+    	helper.parse("update dtaara set value = ?, decvalue = null where name = ?");
+	}
+    
+    @Test
+    public void testParagraphSignInFieldName() {
+    	helper.parse("select deimd§ from nav.divest0f");
+    }
+	
+	@Test
+	public void testFetchFirstParameter() {
+		helper.parse("            Declare C3 Cursor For                                               \n"
+				+ "             select a.dercor_tit, dec(a.dercor_bet, 6, 3),                      \n"
+				+ "                    divadi, divaut                                              \n"
+				+ "               from dercor0f a,                    // valori beta               \n"
+				+ "                    derdi00f b                     // titoli correlabili        \n"
+				+ "              where a.dercor_tit = b.ditito        // codice titolo uguale      \n"
+				+ "                and a.dercor_tip = '0'             // record di testata         \n"
+				+ "                and b.difond = : in_codFon         // solo il fondo richiesto   \n"
+				+ "                and a.dercor_ind = : in_codInd     // indice richiesto          \n"
+				+ "                and a.dercor_bet <> 0              // beta valido               \n"
+				+ "                and a.dercor_bet >= : in_valBetDa  // beta nei limiti da        \n"
+				+ "                and a.dercor_bet <= : in_valBetA   // beta nei limiti a         \n"
+				+ "                and a.dercor_bet <= : in_valBetLs  // beta <= ultimo letto      \n"
+				+ "                and a.dercor_tit <> : in_codTitLs  // titolo <> ultimo letto    \n"
+				+ "                and b.divadi > b.divaut            // valore disponibile <> 0   \n"
+				+ "                and a.dercor_dtr =                 // correlazione piu' recente \n"
+				+ "                         (select max(c.dercor_dtr) // rispetto alla data NAV    \n"
+				+ "                            from dercor0f c                                     \n"
+				+ "                           where a.dercor_ind = c.dercor_ind                    \n"
+				+ "                             and a.dercor_tit = c.dercor_tit                    \n"
+				+ "                             and c.dercor_dtr <= : in_datLim                    \n"
+				+ "                             and c.dercor_tip = '0')                            \n"
+				+ "              order by dec(a.dercor_bet, 6, 3) desc,                            \n"
+				+ "                       a.dercor_tit                                             \n"
+				+ "              fetch first : x_nRows rows only");
+	}
+    
+    @Test
+    public void testCreateSequence() {
+    	helper.parse("create sequence qtemp/stprz00f_rrn_seq");
+    }
+
 }

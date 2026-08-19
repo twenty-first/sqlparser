@@ -10,38 +10,46 @@ statement :
 //    | callStatement
     | closeStatement
     | commitStatement
+    | connectStatement
     | createIndexStatement
     | createTableStatement
+    | createSequenceStatement
     | declareCursorStatement
     | declareTempTableStatement
     | deleteStatement
+    | disconnectStatement
+    | dropAliasStatement
+    | dropIndexStatement
     | dropTableStatement
     | executeStatement
     | fetchStatement
+    | getDiagnosticsStatement
     | insertStatement
+    | labelStatement
     | openStatement
     | prepareStatement
     | selectStatement
     | setStatement
     | setOptionStatement
+    | truncateStatement
     | updateStatement
     | valuesStatement
-    | catchAll
+//    | catchAll
     )
     ;
 
 selectStatement :
     ( WITH localTableDefinition ( COMMA localTableDefinition )* )? 
     selectExpression //( selectModifier )*
-    withUrClause?
+    isolationClause?
     ;
 
-withUrClause :
-    WITH UR
+isolationClause :
+    WITH ( UR | NC )
     ;
 
 selectExpression :
-    simpleSelect ( UNION ALL? simpleSelect )*
+    simpleSelect ( UNION ALL? ( simpleSelect | LPAR simpleSelect RPAR ) )*
     ;
 
 simpleSelect :
@@ -50,19 +58,24 @@ simpleSelect :
     fromClause?
     whereClause?
     ( GROUP BY orderingTerm ( COMMA orderingTerm )* ( HAVING expression )? )?
-    ( ORDER BY orderingTerm ( COMMA orderingTerm )* )?
+    orderByClause?
     ( FOR ( FETCH | READ ) ONLY
     | OPTIMIZE FOR INTEGER ( ROW | ROWS )
-    | FETCH FIRST INTEGER? ( ROW | ROWS ) ONLY 
+    | FETCH FIRST (INTEGER | inputParameter)? ( ROW | ROWS ) ONLY 
     )*
 	;
-	    
+
+orderByClause :
+    ORDER BY orderingTerm ( COMMA orderingTerm )*
+    ;
+    
 insertStatement :
     INSERT INTO table ( LPAR identifier ( COMMA identifier )* RPAR )? insertRowsClause?
     ( insertValuesClause
     | LPAR selectStatement RPAR
     | selectStatement
     )
+    isolationClause?
     ;
 
 insertRowsClause :
@@ -70,40 +83,65 @@ insertRowsClause :
     ;
 
 insertValuesClause :
-    VALUES LPAR 
+    VALUES 
     ( combinedInputParameter
-    | expression 
+    | LPAR 
+      ( combinedInputParameter
+      | expression 
+      )
+      ( COMMA expression )*
+      RPAR
     )
-    ( COMMA expression )*
-    RPAR
     ;
 
 updateStatement :
-    UPDATE table SET identifier ( POINT identifier )? EQUALS expression 
-    ( COMMA identifier ( POINT identifier )? EQUALS expression )*
+    UPDATE table identifier?
+    SET ( ROW | identifier ( POINT identifier )? | LPAR identifier ( POINT identifier )? ( COMMA identifier ( POINT identifier )? )* RPAR ) EQUALS expression 
+    ( COMMA ( identifier ( POINT identifier )? | LPAR identifier ( POINT identifier )? RPAR ) EQUALS expression )*
     whereClause?
     ;
 
 deleteStatement :
     DELETE FROM? table whereClause?
+    isolationClause?
     ;
 
+dropAliasStatement :
+    DROP ALIAS table
+    ;
+    
 dropTableStatement :
-	DROP TABLE table
+	DROP TABLE ( IF EXISTS )? table
 	;
-	
-setStatement :
-    SET ( identifier | combinedOutputParameter ) EQUALS expression
+
+dropIndexStatement : 
+    DROP INDEX index
     ;
 
+truncateStatement :
+    TRUNCATE TABLE? ONLY? table
+    ;
+    	
+setStatement :
+    SET ( setTarget | LPAR setTarget ( COMMA setTarget )* RPAR ) EQUALS expression
+    ;
+
+setTarget :
+    identifier | combinedOutputParameter
+    ;
+    
 valuesStatement :
 	VALUES expression ( COMMA expression )* intoClause?
 	;
 	
 fetchStatement :
-    FETCH NEXT? FROM? identifier intoClause
+    FETCH ( FIRST | NEXT )? FROM? identifier ( forClause )? intoClause?
     ;
-        
+
+forClause :
+    FOR ( INTEGER | simpleInputParameter ) ROWS
+    ;
+    
 intoClause :
     INTO combinedOutputParameter ( COMMA combinedOutputParameter )*
     ;
@@ -112,6 +150,10 @@ fromClause :
     FROM joinSource ( COMMA joinSource )*
     ;
 
+getDiagnosticsStatement :
+    GET DIAGNOSTICS simpleOutputParameter EQUALS ( DB2_NUMBER_ROWS | ROW_COUNT )
+    ;
+    
 executeStatement :
     EXECUTE IMMEDIATE? ( identifier | simpleInputParameter ) usingClause?
     ;
@@ -128,12 +170,17 @@ usingClause :
     ;
 
 declareCursorStatement :
-    DECLARE ( CURSOR name = identifier | name = identifier CURSOR ) FOR
+    DECLARE ( ( SCROLL | INSENSITIVE )* CURSOR name = identifier | name = identifier ( SCROLL | INSENSITIVE )* CURSOR ) FOR
     ( stmt = identifier
-    | simpleSelect
+    | selectStatement
     )
+    ( FOR READ ONLY | updateClause )?
     ;
     
+updateClause :
+    FOR UPDATE ( OF identifier ( COMMA identifier )* )?
+    ;
+
 prepareStatement : 
     PREPARE identifier FROM simpleInputParameter
     ;
@@ -141,29 +188,59 @@ prepareStatement :
 closeStatement :
     CLOSE identifier
     ;
+
+connectStatement :
+    CONNECT RESET
+    ;
+
+disconnectStatement :
+    DISCONNECT CURRENT
+    ;
     
 declareTempTableStatement :
 	DECLARE GLOBAL TEMPORARY TABLE table
-	( LIKE table 
+	( LIKE table
+	| AS ( selectStatement | LPAR selectStatement RPAR )
 	| tableDefinition
 	)
 	temporaryTableOption*
 	;
 
 tableDefinition :
-    LPAR identifier expression ( COMMA identifier expression )* RPAR
+    LPAR columnDefinition ( COMMA columnDefinition )* RPAR
   ;
 
+columnDefinition :
+    identifier typeName ( LPAR INTEGER ( COMMA INTEGER )? RPAR )? ( NOT? NULL | WITH? DEFAULT expression? )*
+    ;
+
+typeName :
+	( BIGINT
+	| CHAR
+	| DATE
+	| DECIMAL
+	| NUMERIC
+	| SMALLINT
+	| TIME
+	| TIMESTAMP
+	| VARCHAR
+	)
+	;
+	
 temporaryTableOption :
 	( ON COMMIT ( DELETE | PRESERVE ) ROWS
 	| WITH REPLACE
 	| NOT? LOGGED
+	| dataClause
 	)
 	;
 
 createTableStatement :
     CREATE ( orReplaceClause )? TEMPORARY? TABLE ( IF NOT EXISTS )? table
-    ( AS simpleSelect ( WITH NO? DATA )?
+    ( AS ( selectStatement | LPAR selectStatement RPAR )
+      ( recordFormatClause
+      | dataClause
+      )*
     | tableDefinition
     )
     ;
@@ -171,14 +248,51 @@ createTableStatement :
 orReplaceClause :
 	OR REPLACE
 	;
-	
-createIndexStatement :
-	CREATE UNIQUE? INDEX index ON table LPAR orderingTerm ( COMMA orderingTerm )* RPAR 
-	( USING catchAll )?
+
+recordFormatClause :
+	RCDFMT identifier
 	;
 
+dataClause :
+    WITH NO? DATA | DEFINITION ONLY
+    ;
+
+createSequenceStatement :
+	CREATE SEQUENCE ( IF NOT EXISTS )? sequence
+	;
+	
+labelStatement :
+    LABEL ON
+    ( ( TABLE table | INDEX index ) IS STRING
+    | COLUMN table LPAR columnLabel ( COMMA columnLabel )* RPAR
+    )
+    ;
+    
+columnLabel :
+    identifier TEXT? IS STRING
+    ;
+
+createIndexStatement :
+	CREATE UNIQUE? INDEX index ON table LPAR orderingTerm ( COMMA orderingTerm )* RPAR 
+	( mediaClause
+	| memoryClause
+//	| USING catchAll
+	)*
+	;
+
+mediaClause :
+    UNIT ( ANY | SSD )
+    ;
+
+memoryClause :
+    KEEP IN MEMORY ( YES | NO )
+    ;
+    
 alterTableStatement :
-ALTER TABLE identifier ADD PRIMARY KEY LPAR identifier ( COMMA identifier )* RPAR
+    ALTER TABLE table 
+    ( ADD PRIMARY KEY LPAR identifier ( COMMA identifier )* RPAR
+    | ADD COLUMN columnDefinition
+    )*
     ;
 
 commitStatement :
@@ -217,12 +331,17 @@ optionValue :
     ;
 
 whereClause :
-    WHERE expression
+    WHERE ( currentClause | expression )
+    ;
+
+currentClause :
+    CURRENT OF identifier
     ;
         
 selectColumn : 
     ( NEXTVAL FOR sequence
-    | columnExpression ( AS? identifier )?
+    | columnExpression ( AS? ( identifier | RPG_STRING ) )?
+    | ( identifier POINT )? MULT
     )
     ;
 
@@ -237,24 +356,20 @@ joinSource :
 tableOrSelect :
     ( table
     | LPAR selectExpression RPAR ( AS? identifier )?
+    | TABLE LPAR ( expression ( COMMA expression )* | selectStatement ) RPAR ( AS? identifier )?
     )
     ;
 
 table :
-	( identifier								
-	| identifier schemaSeparator identifier	
-	)
-	( AS? identifier )?
+    qualifiedName ( AS? identifier )?
 	;
 
 sequence :
-    identifier
+    qualifiedName
     ;
 
 index :
-	( identifier 
-	| identifier schemaSeparator identifier
-	)
+	qualifiedName
 	;
 
 schemaSeparator :
@@ -263,6 +378,13 @@ schemaSeparator :
 	)
 	;
 
+qualifiedName :
+    ( library = identifier SLASH                                
+    | schema = identifier POINT 
+    )?
+    name = identifier
+    ;
+    
 localTableDefinition :
   localTable ( AS LPAR selectExpression RPAR )? //( selectModifier )
   ;
@@ -326,11 +448,16 @@ orderingTerm :
 expression : 
 	term ( binaryOp term )* postfixOp?
 	;
-	
+
+castExpr :
+    CAST LPAR expression AS expression RPAR
+    ;
+    
 term :
     currentTimestamp
     | prefixOp?
     ( factor
+    | castExpr
     | decimalCall
     | dateCall
     | timestampCall
@@ -338,24 +465,29 @@ term :
 //    | identifier exprList?
     | functionCall
     | exprList 
-    | LPAR selectExpression RPAR
+    | LPAR selectStatement RPAR
     | CASE expression? ( WHEN expression THEN expression )+ ( ELSE expression )? END
     )
 	;
 
 functionCall :
-    function exprList?
+    function
+    ( exprList | LPAR RPAR | LPAR expression FROM expression FOR expression RPAR )?
+    ( OVER LPAR ( PARTITION BY columnExpression )? orderByClause? RPAR )?
     ;
     
 function :
 	( CONCAT
 	| DAY
 	| DAYS
+	| IFNULL
 	| LOCATE
 	| MAX
 	| MONTH
-//	| VALUE
+	| NEXTVAL
+	| VALUE
 	| YEAR
+	| typeName
 	| identifier
 	)
 	;
@@ -419,7 +551,7 @@ binaryOp :
     ( AND
     | AS
     | BETWEEN
-    | CAST
+    | CAST_OP
     | COLLATE
     | CONCAT
     | NOT? IN
@@ -439,6 +571,7 @@ binaryOp :
     | LOG_OR
     | LOG_AND
     | NEQ
+    | PARAM_IS
     )
     ;
 
@@ -474,58 +607,71 @@ number :
     ;
 
 floating :
-	INTEGER DEC_PART
+//	INTEGER DEC_PART
+	INTEGER ( COMMA | POINT ) INTEGER
 	;
 	
 identifier :
-    IDENTIFIER | RPG_IDENTIFIER | TEMPORARY
+    IDENTIFIER
+    | RPG_IDENTIFIER
+    | DATA
+    | DESC
+    | LEFT
+    | RIGHT
+    | ROWS
+    | TEMPORARY 
+    | TEXT
+    | TIMESTAMP
+    | VALUE
+    | UPDATE
+    | YEAR
     ;
     
-catchAll :
-    sqlWord+ ( sqlSeparator+ sqlWord* )*
-    ;
+//catchAll :
+//    sqlWord+ ( sqlSeparator+ sqlWord* )*
+//    ;
 	
-sqlWord :
-    ( ALL
-    | BY
-    | CLOSE
-    | DECLARE
-    | ELSE
-    | END
-    | FROM
-    | IS
-    | OF
-    | ON
-    | OPEN
-    | READ
-    | SET
-    | TO
-    | USING
+//sqlWord :
+//    ( ALL
+//    | BY
+//    | CLOSE
+//    | DECLARE
+//    | ELSE
+//    | END
+//    | FROM
+//    | IS
+//    | OF
+//    | ON
+//    | OPEN
+//    | READ
+//    | SET
+//    | TO
+//    | USING
 //    | VALUE
-    | WHEN
-    | identifier
-    | STRING
-    | number
-    | combinedInputParameter
-    )
-    ;
+//    | WHEN
+//    | identifier
+//    | STRING
+//    | number
+//    | combinedInputParameter
+//    )
+//    ;
 
-sqlSeparator :
-    ( COMMA
-    | POINT
-    | EQUALS
-    | LESS    
-    | GRT
-    | LESS_EQ
-    | GRT_EQ
-    | LPAR
-    | RPAR
-    | PLUS
-    | MINUS
-    | SLASH
-    | MULT
-    | LOG_OR
-    | LOG_AND
-    | NEQ
-    )
-    ;
+//sqlSeparator :
+//    ( COMMA
+//    | POINT
+//    | EQUALS
+//    | LESS    
+//    | GRT
+//    | LESS_EQ
+//    | GRT_EQ
+//    | LPAR
+//    | RPAR
+//    | PLUS
+//    | MINUS
+//    | SLASH
+//    | MULT
+//    | LOG_OR
+//    | LOG_AND
+//    | NEQ
+//    )
+//    ;

@@ -3,22 +3,19 @@ package it.twenfir.sqlparser.ast;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class ExecuteStatement extends Statement {
+public class GetDiagnosticsStatement extends Statement {
 
-	private String name;
-
-	public ExecuteStatement(Location location, String name) {
+	public GetDiagnosticsStatement(Location location) {
 		super(location);
-		this.name = name;
 	}
-
-	public String getName() {
-		return name;
+	
+	public SimpleOutputParameter getOutputParameter() {
+		return getChild(SimpleOutputParameter.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
 		if ( visitor instanceof SqlVisitor ) {
-			return ((SqlVisitor<? extends ValueT>) visitor).visitExecuteStatement(this);
+			return ((SqlVisitor<? extends ValueT>) visitor).visitGetDiagnosticsStatement(this);
     	}
     	else {
     		return visitor.visit(this);
