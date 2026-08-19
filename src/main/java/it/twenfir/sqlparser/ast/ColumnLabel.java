@@ -1,18 +1,17 @@
 package it.twenfir.sqlparser.ast;
 
-import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class WithUrClause extends AstNode {
+public class ColumnLabel extends Statement {
 
-	public WithUrClause(Location location) {
+	public ColumnLabel(Location location) {
 		super(location);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
-		if ( visitor instanceof SqlVisitor ) {
-			return ((SqlVisitor<? extends ValueT>) visitor).visitWithUrClause(this);
+    	if ( visitor instanceof SqlVisitor ) {
+    		return ((SqlVisitor<? extends ValueT>) visitor).visitColumnLabel(this);
     	}
     	else {
     		return visitor.visit(this);

@@ -3,6 +3,8 @@ package it.twenfir.sqlparser.ast;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
@@ -112,5 +114,34 @@ public class AstUnitTests extends TestBase {
 		Iterator<CombinedOutputParameter> iter = statement.getDescendants(CombinedOutputParameter.class);
 		CombinedOutputParameter p = iter.next();
 		assertEquals("i", p.getIndicator().getName());
+    }
+    
+    @Test
+    public void testFetchFor() {
+    	FetchStatement statement = (FetchStatement)helper.ast("fetch c1 for :nrrows rows into :dsmotra");
+    	ForClause fc = statement.getForClause();
+    	assertNull(fc.getCount());
+    	SimpleInputParameter p = fc.getInputParameter();
+    	assertEquals("nrrows", p.getParameter().getName());
+    }
+    
+    @Test
+    public void testComplexUpdate() {
+    	Statement statement = (Statement)helper.ast(
+    			"update p99vclie0 v set (v.svcold, v.svtono, v.svnazi, v.svpron, v.svcata, v.svf02, v.svindc, v.svlocc, v.svproc, v.svcapc, v.svnear, v.svindf, v.svlocf, v.svprof, v.svcapf, v.svperf, v.svtpro, v.svuidc, v.svtelf, v.svnfax, v.svnote, v.svtdoi, v.svites, v.svdtsb, v.svdtvs, v.svupdt, v.svfidu, v.svstat, v.svdtst, v.svtror, v.svufco, v.svdtca, v.svterm, v.svpasw, v.svduic, v.svf03, v.svora, v.svuten, v.svprgr) = ( " +
+    			"	select distinct scold, stono, snazi, spron, scata, sf02, sindc, slocc, sproc, scapc, snear, sindf, slocf, sprof, scapf, sperf, stpro, suidc, stelf, snfax, snote, stdoi, sites, sdtsb, sdtvs, supdt, sfidu, sstat, sdtst, stror, sufco, sdtca, sterm, spasw, sduic, sf03, :oravar, :jobuser, 'ars0065' from p99clie00 c inner join p99lerc00 p on p.lrccli=c.sccli inner join p01rapp00 r on r.rcrap=p.lrcrap inner join ( " +
+    			"		select s6.sccrap from salday0f s6 inner join ( " +
+    			"			select max(s4.scdtrg) scdtrg from salday0f s4 " +
+    			"		) s5 on s5.scdtrg=s6.scdtrg group by s6.sccrap having sum(s6.scquoc+s6.scquof)>0 " +
+    			"	) t on t.sccrap=p.lrcrap where lrann=' ' and lrdfvl>=:dtvar and rdfin>=:dtvar and saenewsot(c.stste, c.stsog, c.stsgr)<>c.stste and v.svsoci=c.ssoci and v.svccli=c.sccli and v.svdata=:ldavdr " +
+    			") where exists ( " +
+    			"	select '1' from p99clie00 c inner join p99lerc00 p on p.lrccli=c.sccli inner join p01rapp00 r on r.rcrap=p.lrcrap inner join ( " +
+    			"		select s6.sccrap from salday0f s6 inner join ( " +
+    			"			select max(s4.scdtrg) scdtrg from salday0f s4 " +
+    			"		) s5 on s5.scdtrg=s6.scdtrg group by s6.sccrap having sum(s6.scquoc+s6.scquof)>0 " +
+    			"	) t on t.sccrap=p.lrcrap where lrann=' ' and lrdfvl>=:dtvar and rdfin>=:dtvar and saenewsot(c.stste, c.stsog, c.stsgr)<>c.stste and v.svsoci=c.ssoci and v.svccli=c.sccli and v.svdata=:ldavdr " +
+    			")"
+    	);
+    	assertNotNull(statement);
     }
 }

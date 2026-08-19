@@ -1,27 +1,33 @@
 package it.twenfir.sqlparser.ast;
 
-import java.util.Iterator;
-
+import it.twenfir.antlr.ast.AstNode;
 import it.twenfir.antlr.ast.AstVisitor;
 import it.twenfir.antlr.ast.Location;
 
-public class SetStatement extends Statement {
+public class SetTarget extends AstNode {
 
-    public SetStatement(Location location) {
+	private String name;
+
+    public SetTarget(Location location, String name) {
         super(location);
+		this.name = name;
     }
 
-    public Iterator<SetTarget> getTargets() {
-    	return getChildren(SetTarget.class);
-    }
-    
+	public String getName() {
+		return name;
+	}
+
+	public OutputParameter getParameter() {
+		return getChild(OutputParameter.class);
+	}
+	
 	public Expression getExpression() {
 		return getChild(Expression.class);
 	}
 	
     public <ValueT> ValueT accept(AstVisitor<? extends ValueT> visitor) {
 		if ( visitor instanceof SqlVisitor ) {
-			return ((SqlVisitor<? extends ValueT>) visitor).visitSetStatement(this);
+			return ((SqlVisitor<? extends ValueT>) visitor).visitSetTarget(this);
     	}
     	else {
     		return visitor.visit(this);

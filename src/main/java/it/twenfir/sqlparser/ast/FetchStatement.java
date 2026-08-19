@@ -16,6 +16,10 @@ public class FetchStatement extends Statement {
 		return name;
 	}
 	
+	public ForClause getForClause() {
+		return getChild(ForClause.class);
+	}
+	
 	public IntoClause getIntoClause() {
 		return getChild(IntoClause.class);
 	}
