@@ -6,12 +6,12 @@
         <groupId>it.twenfir</groupId>
         <artifactId>twenfir-bom</artifactId>
         <version>0.1.4</version>
-        <relativePath></relativePath>
+        <relativePath />
     </parent>
 
     <groupId>it.twenfir</groupId>
     <artifactId>sqlparser</artifactId>
-    <version>0.1.4-SNAPSHOT</version>
+    <version>0.1.4</version>
 
     <name>sqlparser</name>
     <description>
@@ -127,6 +127,6 @@
         <connection>scm:git:git@github.com:twenty-first/sqlparser.git</connection>
         <developerConnection>scm:git:git@github.com:twenty-first/sqlparser.git</developerConnection>
         <url>https://github.com/twenty-first/sqlparser.git</url>
-      <tag>HEAD</tag>
+      <tag>v0.1.4</tag>
   </scm>
 </project>
